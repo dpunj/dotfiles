@@ -1,0 +1,9 @@
+# Fish
+fish/fish_variables
+
+# Zed
+zed/conversations/
+
+# OS junk
+.DS_Store
+EOF
