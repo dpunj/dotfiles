@@ -1,0 +1,18 @@
+{
+  "amp.mcpServers": {
+    "linear": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.linear.app/sse"
+      ]
+    },
+    "sentry": {
+      "url": "https://mcp.sentry.dev/mcp"
+    },
+    "tldraw": {
+      "command": "bun",
+      "args": ["run", "/Users/divesh/Documents/projects/tldraw-mcp/src/index.ts"]
+    }
+  }
+}

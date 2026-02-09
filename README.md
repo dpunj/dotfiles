@@ -2,10 +2,26 @@
 
 Personal config files for macOS, managed via symlinks.
 
+**`~/dotfiles/` is the source of truth.** Edit configs here, commit, and push. `~/.config/` just holds symlinks that point back to this repo — never edit files in `~/.config/` directly.
+
+```
+~/dotfiles/  (source of truth — git-tracked)
+    │
+    ├── fish/           ──symlink──▸  ~/.config/fish/
+    ├── ghostty/        ──symlink──▸  ~/.config/ghostty/
+    ├── amp/            ──symlink──▸  ~/.config/amp/
+    ├── zed/settings.json ─symlink─▸  ~/.config/zed/settings.json
+    ├── starship.toml   ──symlink──▸  ~/.config/starship.toml
+    └── AGENTS.md       ──symlink──▸  ~/.config/AGENTS.md
+```
+
 ## Structure
 
 ```
 dotfiles/
+├── amp/            → ~/.config/amp/
+│   ├── settings.json   # Amp agent settings
+│   └── skills/         # Custom Amp skills
 ├── fish/           → ~/.config/fish/
 │   ├── config.fish     # Shell config (PATH, interactive tools)
 │   ├── completions/    # Custom completions
@@ -15,7 +31,8 @@ dotfiles/
 │   └── config          # Terminal emulator settings
 ├── zed/
 │   └── settings.json   → ~/.config/zed/settings.json
-└── starship.toml   → ~/.config/starship.toml
+├── starship.toml   → ~/.config/starship.toml
+└── AGENTS.md       → ~/.config/AGENTS.md
 ```
 
 ## Installation
@@ -29,12 +46,18 @@ ln -s ~/dotfiles/fish ~/.config/fish
 # Ghostty (entire directory)
 ln -s ~/dotfiles/ghostty ~/.config/ghostty
 
+# Amp (entire directory)
+ln -s ~/dotfiles/amp ~/.config/amp
+
 # Starship prompt
 ln -s ~/dotfiles/starship.toml ~/.config/starship.toml
 
 # Zed (settings file only — Zed manages the rest of ~/.config/zed/)
 mkdir -p ~/.config/zed
 ln -s ~/dotfiles/zed/settings.json ~/.config/zed/settings.json
+
+# AGENTS.md (global agent instructions)
+ln -s ~/dotfiles/AGENTS.md ~/.config/AGENTS.md
 ```
 
 ## What's Configured

@@ -40,6 +40,8 @@ Style: concise; min tokens; no fluff.
 ## Important Locations
 - Dotfiles: `~/dotfiles` (fish, ghostty, zed, starship configs)
 - Global config: `~/.config/`
+- Global gitignore: `~/.config/git/ignore`
+- `local/` dir in any repo is globally gitignored — use for agent scratch space (debug logs, plans, large reference files). Never committed.
 
 ## Tools
 
