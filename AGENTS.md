@@ -37,6 +37,55 @@ Style: concise; min tokens; no fluff.
 - Unrecognized changes in repo: assume other agent/user; keep going unless it causes issues.
 - Leave breadcrumb notes in thread for complex multi-step work.
 
+## Shaping Workflow (Shape Up)
+
+Use Ryan Singer's Shape Up methodology for all non-trivial features. Load the `shaping` and `breadboarding` skills before starting.
+
+**Reference:** [rjs/shaping-skills](https://github.com/rjs/shaping-skills), [Shaping 0-1 walkthrough](https://x.com/rjs/status/2020184079350563263), [rjs/tick](https://github.com/rjs/tick) (canonical example output).
+
+### The Loop (Singer's workflow)
+
+1. **Describe** what's in your head — dump the vision, ask to "capture the requirements and tease apart the key parts of the solution A"
+2. **`show me R x A`** — fit check: requirements vs shape. Jump-in point to see what's solved/unsolved
+3. **`show me A x R`** — rotate: each part against all R. Reveals what to spike next
+4. **`spike A2`** — dig into unknowns. Spikes often revise R, not just A
+5. **`breadboard A`** — wire into concrete UI + code affordances (one circuit)
+6. **`slice it`** — cut into vertical demo-able scopes (max 9 slices)
+7. **Build slice by slice** — "make an implementation plan for V1, include how you will test it"
+
+### Document Rules
+
+**One `shaping.md` per feature.** Everything lives in one file: Frame (Source/Problem/Outcome) → R → Shapes → Fit Check → Breadboard (tables + Mermaid + wiring narrative) → Slices. This is the ground truth. Only spikes and individual slice plans get separate files.
+
+**File naming and location** (in `local/docs/`, which is globally gitignored):
+- `local/docs/{feature}-shaping.md` — the shaping doc (ground truth)
+- `local/docs/{feature}-spike-{part}.md` — spike investigations
+- `local/docs/{feature}-v{n}-plan.md` — individual slice implementation plans
+- `local/docs/{feature}-big-picture.md` — summary view (created after shape is selected)
+
+**Shaping docs are permanent.** They are architectural decision records. Don't delete after shipping — they explain *why* the system is the way it is. When revisiting a feature, start from the existing shaping doc.
+
+**Singer's shorthand commands:**
+
+| Command | What it does |
+|---------|-------------|
+| `show me R x A` | Fit check: requirements vs shape A |
+| `show me A x R` | Rotated fit check: each part of A against all R |
+| `spike A2` | Investigate the unknown in part A2 |
+| `breadboard A` | Wire shape A into concrete UI + code affordances |
+| `slice it` | Cut the breadboard into vertical demo-able scopes |
+| `let's update A with Approach 1` | Incorporate spike findings into the shape |
+
+### Key Principles
+
+- **Separate R from S.** R states the need (solution-agnostic). S describes the mechanism. If R reads like a solution, it belongs in S.
+- **Fit check is binary.** ✅ or ❌. No ⚠️ in fit checks — ⚠️ belongs in the Parts table Flag column only.
+- **Flagged unknowns (⚠️) fail the fit check.** You can't claim ✅ for something you don't know how to build.
+- **Spikes ask mechanics, not effort.** "Where is X?", "What changes are needed?", not "How long will this take?"
+- **Every slice must have demo-able UI.** No horizontal layers ("set up all the data models"). Each slice cuts through all layers.
+- **Breadboard tables are the truth, Mermaid is visualization.** Changes flow from tables → diagram, never reverse.
+- **Include a wiring narrative.** Plain-English "Startup flow:" and "Command flow:" alongside the Mermaid diagram.
+
 ## Important Locations
 - Dotfiles: `~/dotfiles` (fish, ghostty, zed, starship configs)
 - Global config: `~/.config/`
