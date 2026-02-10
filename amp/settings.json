@@ -1,4 +1,5 @@
 {
+  "amp.fuzzy.alwaysIncludePaths": ["local/docs/**"],
   "amp.mcpServers": {
     "linear": {
       "command": "npx",
