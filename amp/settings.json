@@ -12,7 +12,7 @@
     },
     "tldraw": {
       "command": "bun",
-      "args": ["run", "/Users/divesh/Documents/projects/tldraw-mcp/src/index.ts"]
+      "args": ["run", "/Users/divesh/code/tldraw-mcp/src/index.ts"]
     }
   }
 }
