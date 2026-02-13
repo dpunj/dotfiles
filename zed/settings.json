@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "git_panel": {
+    "tree_view": true,
+  },
   "terminal": {
     "shell": {
       "program": "/opt/homebrew/bin/fish",
@@ -33,6 +36,9 @@
   "ui_font_size": 16,
   "buffer_font_family": "Berkeley Mono",
   "buffer_font_size": 15,
+  "search": {
+    "include_ignored": true,
+  },
   "theme": {
     "mode": "system",
     "light": "One Light",
