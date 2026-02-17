@@ -12,7 +12,8 @@ Personal config files for macOS, managed via symlinks.
     ├── amp/            ──symlink──▸  ~/.config/amp/
     ├── zed/settings.json ─symlink─▸  ~/.config/zed/settings.json
     ├── starship.toml   ──symlink──▸  ~/.config/starship.toml
-    └── AGENTS.md       ──symlink──▸  ~/.config/AGENTS.md
+    ├── AGENTS.md       ──symlink──▸  ~/.config/AGENTS.md
+    └── AGENTS.md       ──symlink──▸  ~/.claude/CLAUDE.md
 ```
 
 ## Structure
@@ -56,8 +57,11 @@ ln -s ~/dotfiles/starship.toml ~/.config/starship.toml
 mkdir -p ~/.config/zed
 ln -s ~/dotfiles/zed/settings.json ~/.config/zed/settings.json
 
-# AGENTS.md (global agent instructions)
+# AGENTS.md (global agent instructions — Amp reads ~/.config/AGENTS.md)
 ln -s ~/dotfiles/AGENTS.md ~/.config/AGENTS.md
+
+# Claude Code reads ~/.claude/CLAUDE.md (symlink to same file)
+ln -s ~/dotfiles/AGENTS.md ~/.claude/CLAUDE.md
 ```
 
 ## What's Configured
