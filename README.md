@@ -101,6 +101,11 @@ ln -s ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 - Helix keybindings enabled
 - Agent: Claude Opus 4.5 / Sonnet 4.5
 
+### Claude Code (`claude/`)
+
+- Two-line statusline: model/folder/branch + context bar/cost/duration
+- Context bar goes dim `░` → solid `█` as context fills up
+
 ### Starship (`starship.toml`)
 
 Currently using defaults (empty config).
