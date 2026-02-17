@@ -14,3 +14,8 @@ if status is-interactive
 
     starship init fish | source
 end
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/divesh/.lmstudio/bin
+# End of LM Studio CLI section
+
