@@ -15,6 +15,14 @@ if status is-interactive
     starship init fish | source
 end
 
+# Claude Code via local LM Studio
+function claude-local
+    ANTHROPIC_BASE_URL=http://localhost:1234 \
+    ANTHROPIC_AUTH_TOKEN=lmstudio \
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
+    claude $argv
+end
+
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/divesh/.lmstudio/bin
 # End of LM Studio CLI section
