@@ -12,6 +12,8 @@ Personal config files for macOS, managed via symlinks.
     ├── amp/            ──symlink──▸  ~/.config/amp/
     ├── zed/settings.json ─symlink─▸  ~/.config/zed/settings.json
     ├── starship.toml   ──symlink──▸  ~/.config/starship.toml
+    ├── claude/settings.json ─symlink─▸  ~/.claude/settings.json
+    ├── claude/statusline.sh ─symlink─▸  ~/.claude/statusline.sh
     ├── AGENTS.md       ──symlink──▸  ~/.config/AGENTS.md
     └── AGENTS.md       ──symlink──▸  ~/.claude/CLAUDE.md
 ```
@@ -32,6 +34,9 @@ dotfiles/
 │   └── config          # Terminal emulator settings
 ├── zed/
 │   └── settings.json   → ~/.config/zed/settings.json
+├── claude/         → ~/.claude/
+│   ├── settings.json  # Claude Code settings (statusline config)
+│   └── statusline.sh  # Two-line minimal statusline script
 ├── starship.toml   → ~/.config/starship.toml
 └── AGENTS.md       → ~/.config/AGENTS.md
 ```
@@ -62,6 +67,10 @@ ln -s ~/dotfiles/AGENTS.md ~/.config/AGENTS.md
 
 # Claude Code reads ~/.claude/CLAUDE.md (symlink to same file)
 ln -s ~/dotfiles/AGENTS.md ~/.claude/CLAUDE.md
+
+# Claude Code settings + statusline
+ln -s ~/dotfiles/claude/settings.json ~/.claude/settings.json
+ln -s ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 ```
 
 ## What's Configured
