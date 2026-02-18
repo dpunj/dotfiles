@@ -12,6 +12,7 @@ Personal config files for macOS, managed via symlinks.
     ├── amp/            ──symlink──▸  ~/.config/amp/
     ├── zed/settings.json ─symlink─▸  ~/.config/zed/settings.json
     ├── starship.toml   ──symlink──▸  ~/.config/starship.toml
+    ├── claude/mcp.json    ──symlink──▸  ~/.mcp.json
     ├── claude/settings.json ─symlink─▸  ~/.claude/settings.json
     ├── claude/statusline.sh ─symlink─▸  ~/.claude/statusline.sh
     ├── qwen/settings.json ─symlink─▸  ~/.qwen/settings.json
@@ -25,7 +26,7 @@ Personal config files for macOS, managed via symlinks.
 ```
 dotfiles/
 ├── amp/            → ~/.config/amp/
-│   ├── settings.json   # Amp agent settings
+│   ├── settings.json   # Amp agent settings + MCP servers
 │   └── skills/         # Custom Amp skills
 ├── fish/           → ~/.config/fish/
 │   ├── config.fish     # Shell config (PATH, interactive tools)
@@ -37,6 +38,7 @@ dotfiles/
 ├── zed/
 │   └── settings.json   → ~/.config/zed/settings.json
 ├── claude/         → ~/.claude/
+│   ├── mcp.json      # Global MCP servers (→ ~/.mcp.json)
 │   ├── settings.json  # Claude Code settings (statusline config)
 │   └── statusline.sh  # Two-line minimal statusline script
 ├── qwen/           → ~/.qwen/
@@ -73,7 +75,8 @@ ln -s ~/dotfiles/AGENTS.md ~/.config/AGENTS.md
 # Claude Code reads ~/.claude/CLAUDE.md (symlink to same file)
 ln -s ~/dotfiles/AGENTS.md ~/.claude/CLAUDE.md
 
-# Claude Code settings + statusline
+# Claude Code settings + statusline + global MCP servers
+ln -s ~/dotfiles/claude/mcp.json ~/.mcp.json
 ln -s ~/dotfiles/claude/settings.json ~/.claude/settings.json
 ln -s ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 
@@ -111,10 +114,16 @@ ln -s ~/dotfiles/qwen/statusline.sh ~/.qwen/statusline.sh
 - Helix keybindings enabled
 - Agent: Claude Opus 4.5 / Sonnet 4.5
 
+### Amp (`amp/settings.json`)
+
+- MCP servers (`amp.mcpServers`): context7, linear, sentry, tldraw
+
 ### Claude Code (`claude/`)
 
 - Two-line statusline: model/folder/branch + context bar/cost/duration
 - Context bar goes dim `░` → solid `█` as context fills up
+- Global MCP servers (`mcp.json` → `~/.mcp.json`): context7
+- Add project-specific servers to `.mcp.json` in the project root
 
 ### Qwen Code (`qwen/`)
 

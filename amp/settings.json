@@ -14,6 +14,10 @@
     "tldraw": {
       "command": "bun",
       "args": ["run", "/Users/divesh/code/tldraw-mcp/src/index.ts"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
     }
   }
 }
