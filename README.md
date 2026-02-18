@@ -16,6 +16,8 @@ Personal config files for macOS, managed via symlinks.
     ├── claude/settings.json ─symlink─▸  ~/.claude/settings.json
     ├── claude/statusline.sh ─symlink─▸  ~/.claude/statusline.sh
     ├── qwen/settings.json ─symlink─▸  ~/.qwen/settings.json
+    ├── kimi/config.toml ──symlink──▸  ~/.kimi/config.toml
+    ├── kimi/mcp.json  ───symlink──▸  ~/.kimi/mcp.json
     ├── AGENTS.md       ──symlink──▸  ~/.config/AGENTS.md
     └── AGENTS.md       ──symlink──▸  ~/.claude/CLAUDE.md
 ```
@@ -42,9 +44,22 @@ dotfiles/
 │   └── statusline.sh  # Two-line minimal statusline script
 ├── qwen/           → ~/.qwen/
 │   └── settings.json  # Qwen Code settings (model: coder-model, oauth)
+├── kimi/           → ~/.kimi/
+│   ├── config.toml   # Kimi Code settings (model: kimi-for-coding, oauth)
+│   └── mcp.json      # MCP servers (context7)
 ├── starship.toml   → ~/.config/starship.toml
-└── AGENTS.md       → ~/.config/AGENTS.md
+└── AGENTS.md       → ~/.config/AGENTS.md + ~/.claude/CLAUDE.md
 ```
+
+## Agent Instructions (`AGENTS.md`)
+
+All coding agents share a single `AGENTS.md` for instructions, symlinked per agent:
+
+| Agent | Reads from | Symlink |
+|-------|-----------|---------|
+| Claude Code | `~/.claude/CLAUDE.md` | `~/dotfiles/AGENTS.md` → `~/.claude/CLAUDE.md` |
+| Amp | `~/.config/AGENTS.md` | `~/dotfiles/AGENTS.md` → `~/.config/AGENTS.md` |
+| Kimi Code | `AGENTS.md` in working dir | Reads `~/dotfiles/AGENTS.md` directly |
 
 ## Installation
 
@@ -81,6 +96,10 @@ ln -s ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 # Qwen Code settings
 mkdir -p ~/.qwen
 ln -s ~/dotfiles/qwen/settings.json ~/.qwen/settings.json
+
+# Kimi Code settings + MCP servers
+ln -s ~/dotfiles/kimi/config.toml ~/.kimi/config.toml
+ln -s ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
 ```
 
 ## What's Configured
@@ -126,6 +145,12 @@ ln -s ~/dotfiles/qwen/settings.json ~/.qwen/settings.json
 
 - Model: `coder-model` (via OAuth)
 
+### Kimi Code (`kimi/`)
+
+- Model: `kimi-for-coding` (Kimi K2.5, 262k context, via OAuth)
+- Thinking mode enabled by default
+- MCP servers (`mcp.json` → `~/.kimi/mcp.json`): context7
+
 ### Starship (`starship.toml`)
 
 Currently using defaults (empty config).
@@ -138,7 +163,15 @@ Install these via Homebrew:
 brew install fish fzf zoxide starship
 ```
 
+## Docs
+
+- [Claude Code](https://code.claude.com/docs) — [MCP](https://code.claude.com/docs/en/mcp)
+- [Amp](https://ampcode.com/manual) — [MCP](https://ampcode.com/manual#mcp)
+- [Kimi Code](https://moonshotai.github.io/kimi-cli/) — [MCP](https://moonshotai.github.io/kimi-cli/en/customization/mcp.html)
+- [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/)
+
 ## Notes
 
 - Zed recreates `~/.config/zed/` on launch, so only `settings.json` is symlinked (not the whole directory).
 - Node.js is managed via nvm with a hardcoded path. If you upgrade node, update the path in `fish/config.fish`.
+- Kimi Code credentials live in `~/.kimi/credentials/` (not tracked). Install via `curl -L code.kimi.com/install.sh | bash`.
