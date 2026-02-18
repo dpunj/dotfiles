@@ -16,7 +16,6 @@ Personal config files for macOS, managed via symlinks.
     ├── claude/settings.json ─symlink─▸  ~/.claude/settings.json
     ├── claude/statusline.sh ─symlink─▸  ~/.claude/statusline.sh
     ├── qwen/settings.json ─symlink─▸  ~/.qwen/settings.json
-    ├── qwen/statusline.sh ─symlink─▸  ~/.qwen/statusline.sh
     ├── AGENTS.md       ──symlink──▸  ~/.config/AGENTS.md
     └── AGENTS.md       ──symlink──▸  ~/.claude/CLAUDE.md
 ```
@@ -42,8 +41,7 @@ dotfiles/
 │   ├── settings.json  # Claude Code settings (statusline config)
 │   └── statusline.sh  # Two-line minimal statusline script
 ├── qwen/           → ~/.qwen/
-│   ├── settings.json  # Qwen Code settings (model: coder-model, oauth)
-│   └── statusline.sh  # Two-line minimal statusline script
+│   └── settings.json  # Qwen Code settings (model: coder-model, oauth)
 ├── starship.toml   → ~/.config/starship.toml
 └── AGENTS.md       → ~/.config/AGENTS.md
 ```
@@ -80,10 +78,9 @@ ln -s ~/dotfiles/claude/mcp.json ~/.mcp.json
 ln -s ~/dotfiles/claude/settings.json ~/.claude/settings.json
 ln -s ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 
-# Qwen Code settings + statusline
+# Qwen Code settings
 mkdir -p ~/.qwen
 ln -s ~/dotfiles/qwen/settings.json ~/.qwen/settings.json
-ln -s ~/dotfiles/qwen/statusline.sh ~/.qwen/statusline.sh
 ```
 
 ## What's Configured
@@ -128,7 +125,6 @@ ln -s ~/dotfiles/qwen/statusline.sh ~/.qwen/statusline.sh
 ### Qwen Code (`qwen/`)
 
 - Model: `coder-model` (via OAuth)
-- Two-line statusline (matching Claude Code style)
 
 ### Starship (`starship.toml`)
 
