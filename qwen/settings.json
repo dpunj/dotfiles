@@ -1,6 +1,17 @@
 {
-  "model": "coder-model",
+  "model": {
+    "name": "coder-model"
+  },
   "auth": "oauth",
+  "$version": 3,
+  "security": {
+    "auth": {
+      "selectedType": "qwen-oauth"
+    }
+  },
+  "context": {
+    "fileName": ["QWEN.md", "AGENTS.md"]
+  },
   "mcpServers": {
     "linear": {
       "command": "npx",

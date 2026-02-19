@@ -29,7 +29,7 @@ dotfiles/
 │   ├── settings.json     → ~/.claude/settings.json
 │   └── statusline.sh    → ~/.claude/statusline.sh
 ├── qwen/             → ~/.qwen/
-│   └── settings.json     # Qwen Code settings
+│   └── settings.json     # Qwen Code settings + context config
 ├── kimi/             → ~/.kimi/
 │   ├── config.toml       # Kimi Code settings
 │   └── mcp.json          # MCP servers (context7)
@@ -46,6 +46,7 @@ All coding agents share a single `AGENTS.md` — one file, symlinked per agent:
 |-------|-----------|---------|
 | Claude Code | `~/.claude/CLAUDE.md` | `~/dotfiles/AGENTS.md` → `~/.claude/CLAUDE.md` |
 | Amp | `~/.config/AGENTS.md` | `~/dotfiles/AGENTS.md` → `~/.config/AGENTS.md` |
+| Qwen Code | `~/.qwen/QWEN.md` | `~/dotfiles/AGENTS.md` → `~/.qwen/QWEN.md` |
 | Kimi Code | `AGENTS.md` in working dir | Reads `~/dotfiles/AGENTS.md` directly |
 
 ### `local/` scratch directory
@@ -90,9 +91,10 @@ ln -s ~/dotfiles/claude/mcp.json ~/.mcp.json
 ln -s ~/dotfiles/claude/settings.json ~/.claude/settings.json
 ln -s ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 
-# Qwen Code settings
+# Qwen Code settings + global instructions
 mkdir -p ~/.qwen
 ln -s ~/dotfiles/qwen/settings.json ~/.qwen/settings.json
+ln -s ~/dotfiles/AGENTS.md ~/.qwen/QWEN.md
 
 # Kimi Code settings + MCP servers
 ln -s ~/dotfiles/kimi/config.toml ~/.kimi/config.toml
@@ -142,6 +144,9 @@ ln -s ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
 ### Qwen Code (`qwen/`)
 
 - Model: `coder-model` (via OAuth)
+- Context files: reads `QWEN.md` and `AGENTS.md` from project dirs (via `context.fileName`)
+- Global instructions: `~/dotfiles/AGENTS.md` → `~/.qwen/QWEN.md`
+- MCP servers: context7, linear, sentry, tldraw
 
 ### Kimi Code (`kimi/`)
 
