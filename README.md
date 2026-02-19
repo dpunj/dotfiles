@@ -2,53 +2,40 @@
 
 Personal config files for macOS, managed via symlinks.
 
-**`~/dotfiles/` is the source of truth.** Edit configs here, commit, and push. `~/.config/` just holds symlinks that point back to this repo — never edit files in `~/.config/` directly.
-
-```
-~/dotfiles/  (source of truth — git-tracked)
-    │
-    ├── fish/           ──symlink──▸  ~/.config/fish/
-    ├── ghostty/        ──symlink──▸  ~/.config/ghostty/
-    ├── amp/            ──symlink──▸  ~/.config/amp/
-    ├── zed/settings.json ─symlink─▸  ~/.config/zed/settings.json
-    ├── starship.toml   ──symlink──▸  ~/.config/starship.toml
-    ├── claude/mcp.json    ──symlink──▸  ~/.mcp.json
-    ├── claude/settings.json ─symlink─▸  ~/.claude/settings.json
-    ├── claude/statusline.sh ─symlink─▸  ~/.claude/statusline.sh
-    ├── qwen/settings.json ─symlink─▸  ~/.qwen/settings.json
-    ├── kimi/config.toml ──symlink──▸  ~/.kimi/config.toml
-    ├── kimi/mcp.json  ───symlink──▸  ~/.kimi/mcp.json
-    ├── AGENTS.md       ──symlink──▸  ~/.config/AGENTS.md
-    └── AGENTS.md       ──symlink──▸  ~/.claude/CLAUDE.md
-```
+**`~/dotfiles/` is the source of truth.** Edit configs here, commit, and push. Target paths (`~/.config/`, `~/.claude/`, etc.) just hold symlinks that point back to this repo — never edit files there directly.
 
 ## Structure
 
 ```
 dotfiles/
-├── amp/            → ~/.config/amp/
-│   ├── settings.json   # Amp agent settings + MCP servers
-│   └── skills/         # Custom Amp skills
-├── fish/           → ~/.config/fish/
-│   ├── config.fish     # Shell config (PATH, interactive tools)
-│   ├── completions/    # Custom completions
-│   ├── conf.d/         # Auto-sourced config snippets
-│   └── functions/      # Custom functions
-├── ghostty/        → ~/.config/ghostty/
-│   └── config          # Terminal emulator settings
-├── zed/
-│   └── settings.json   → ~/.config/zed/settings.json
-├── claude/
-│   ├── mcp.json      # Global MCP servers (→ ~/.mcp.json)
-│   ├── settings.json  # Claude Code settings (→ ~/.claude/settings.json)
-│   └── statusline.sh  # Two-line minimal statusline (→ ~/.claude/statusline.sh)
-├── qwen/           → ~/.qwen/
-│   └── settings.json  # Qwen Code settings (model: coder-model, oauth)
-├── kimi/           → ~/.kimi/
-│   ├── config.toml   # Kimi Code settings (model: kimi-for-coding, oauth)
-│   └── mcp.json      # MCP servers (context7)
-├── starship.toml   → ~/.config/starship.toml
-└── AGENTS.md       → ~/.config/AGENTS.md + ~/.claude/CLAUDE.md
+│
+│  # ~/.config/ targets
+├── amp/              → ~/.config/amp/
+│   ├── settings.json     # Amp agent settings + MCP servers
+│   └── skills/           # Custom Amp skills
+├── fish/             → ~/.config/fish/
+│   ├── config.fish       # Shell config (PATH, interactive tools)
+│   ├── completions/      # Custom completions
+│   ├── conf.d/           # Auto-sourced config snippets
+│   └── functions/        # Custom functions
+├── ghostty/          → ~/.config/ghostty/
+│   └── config            # Terminal emulator settings
+├── zed/settings.json → ~/.config/zed/settings.json
+├── starship.toml     → ~/.config/starship.toml
+│
+│  # Agent dotdir targets (~/.claude/, ~/.qwen/, ~/.kimi/)
+├── claude/               (files symlinked individually)
+│   ├── mcp.json          → ~/.mcp.json
+│   ├── settings.json     → ~/.claude/settings.json
+│   └── statusline.sh    → ~/.claude/statusline.sh
+├── qwen/             → ~/.qwen/
+│   └── settings.json     # Qwen Code settings
+├── kimi/             → ~/.kimi/
+│   ├── config.toml       # Kimi Code settings
+│   └── mcp.json          # MCP servers (context7)
+│
+│  # Shared across agents
+└── AGENTS.md         → ~/.config/AGENTS.md + ~/.claude/CLAUDE.md
 ```
 
 ## Agent Instructions (`AGENTS.md`)
