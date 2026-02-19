@@ -12,7 +12,7 @@ dotfiles/
 │  # ~/.config/ targets
 ├── amp/              → ~/.config/amp/
 │   ├── settings.json     # Amp agent settings + MCP servers
-│   └── skills/           # Custom Amp skills
+│   └── skills/           # Custom Amp skills (symlinks → skills/)
 ├── fish/             → ~/.config/fish/
 │   ├── config.fish       # Shell config (PATH, interactive tools)
 │   ├── completions/      # Custom completions
@@ -33,6 +33,12 @@ dotfiles/
 ├── kimi/             → ~/.kimi/
 │   ├── config.toml       # Kimi Code settings
 │   └── mcp.json          # MCP servers (context7)
+│
+│  # Skills (source of truth, symlinked to ~/.claude/skills/ and amp/skills/)
+├── skills/
+│   ├── rams/                        # A11y + visual design review (scored)
+│   ├── baseline-ui/                 # Anti-AI-slop UI constraints
+│   └── web-interface-guidelines/    # Vercel's 80+ web UI rules
 │
 │  # Shared across agents
 └── AGENTS.md         → ~/.config/AGENTS.md + ~/.claude/CLAUDE.md
@@ -99,6 +105,14 @@ ln -s ~/dotfiles/AGENTS.md ~/.qwen/QWEN.md
 # Kimi Code settings + MCP servers
 ln -s ~/dotfiles/kimi/config.toml ~/.kimi/config.toml
 ln -s ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
+
+# Design skills (symlink to Claude Code + Amp)
+ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
+ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
+ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
+ln -s ~/dotfiles/skills/rams ~/dotfiles/amp/skills/rams
+ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
+ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-interface-guidelines
 ```
 
 ## What's Configured
@@ -153,6 +167,18 @@ ln -s ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
 - Model: `kimi-for-coding` (Kimi K2.5, 262k context, via OAuth)
 - Thinking mode enabled by default
 - MCP servers (`mcp.json` → `~/.kimi/mcp.json`): context7
+
+### Design Skills (`skills/`)
+
+Three design review skills, available in both Claude Code (`/skill`) and Amp:
+
+| Skill | Source | What it does |
+|-------|--------|-------------|
+| **rams** | [artivilla/agents-config](https://github.com/artivilla/agents-config) | WCAG 2.1 accessibility + visual design review with scored output |
+| **baseline-ui** | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | Opinionated anti-AI-slop constraints (Tailwind, motion, a11y) |
+| **web-interface-guidelines** | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | Comprehensive web UI compliance (80+ rules across a11y, forms, animation, perf, i18n) |
+
+They complement each other: rams scores components, baseline-ui prevents slop at generation time, and web-interface-guidelines covers the full stack.
 
 ### Starship (`starship.toml`)
 
