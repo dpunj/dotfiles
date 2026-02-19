@@ -39,6 +39,7 @@
   "search": {
     "include_ignored": true,
   },
+  "file_scan_inclusions": ["local/**", ".env*"],
   "theme": {
     "mode": "system",
     "light": "One Light",
