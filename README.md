@@ -38,10 +38,10 @@ dotfiles/
 │   └── config          # Terminal emulator settings
 ├── zed/
 │   └── settings.json   → ~/.config/zed/settings.json
-├── claude/         → ~/.claude/
+├── claude/
 │   ├── mcp.json      # Global MCP servers (→ ~/.mcp.json)
-│   ├── settings.json  # Claude Code settings (statusline config)
-│   └── statusline.sh  # Two-line minimal statusline script
+│   ├── settings.json  # Claude Code settings (→ ~/.claude/settings.json)
+│   └── statusline.sh  # Two-line minimal statusline (→ ~/.claude/statusline.sh)
 ├── qwen/           → ~/.qwen/
 │   └── settings.json  # Qwen Code settings (model: coder-model, oauth)
 ├── kimi/           → ~/.kimi/
@@ -53,13 +53,23 @@ dotfiles/
 
 ## Agent Instructions (`AGENTS.md`)
 
-All coding agents share a single `AGENTS.md` for instructions, symlinked per agent:
+All coding agents share a single `AGENTS.md` — one file, symlinked per agent:
 
 | Agent | Reads from | Symlink |
 |-------|-----------|---------|
 | Claude Code | `~/.claude/CLAUDE.md` | `~/dotfiles/AGENTS.md` → `~/.claude/CLAUDE.md` |
 | Amp | `~/.config/AGENTS.md` | `~/dotfiles/AGENTS.md` → `~/.config/AGENTS.md` |
 | Kimi Code | `AGENTS.md` in working dir | Reads `~/dotfiles/AGENTS.md` directly |
+
+### `local/` scratch directory
+
+Every repo can have a `local/` directory for agent scratch space (shaping docs, spikes, plans, debug output). It's globally gitignored via `~/.config/git/ignore` but accessible to all agents and editors:
+
+| Tool | How `local/` is discovered |
+|------|---------------------------|
+| **Amp** | `amp.fuzzy.alwaysIncludePaths: ["local/**"]` in settings.json |
+| **Zed** | `file_scan_inclusions: ["local/**"]` + `search.include_ignored: true` |
+| **Claude/Kimi/Qwen** | Read any file on disk when asked — AGENTS.md instructs them to check `local/docs/` proactively |
 
 ## Installation
 
@@ -132,6 +142,7 @@ ln -s ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
 
 ### Amp (`amp/settings.json`)
 
+- `amp.fuzzy.alwaysIncludePaths: ["local/**"]` — exposes gitignored `local/` to fuzzy search
 - MCP servers (`amp.mcpServers`): context7, linear, sentry, tldraw
 
 ### Claude Code (`claude/`)
