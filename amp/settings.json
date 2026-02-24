@@ -13,7 +13,7 @@
     },
     "tldraw": {
       "command": "bun",
-      "args": ["run", "/Users/divesh/code/tldraw-mcp/src/index.ts"]
+      "args": ["run", "~/code/tldraw-mcp/src/index.ts"]
     },
     "context7": {
       "command": "npx",
