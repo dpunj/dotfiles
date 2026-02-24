@@ -1,6 +1,6 @@
 # PATH setup (before interactive check so non-interactive shells get it too)
 fish_add_path -g /opt/homebrew/bin /opt/homebrew/sbin
-fish_add_path -g "$HOME/.local/bin" "$HOME/.amp/bin" "$HOME/.opencode/bin" "$HOME/.cargo/bin"
+fish_add_path -g "$HOME/.local/bin" "$HOME/.amp/bin" "$HOME/.opencode/bin" "$HOME/.cargo/bin" "$HOME/.bun/bin"
 
 # Node.js via fnm (dynamic — no hardcoded version)
 if command -q fnm

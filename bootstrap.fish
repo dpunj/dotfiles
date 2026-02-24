@@ -199,21 +199,21 @@ function clone_repo --argument-names url dirname
 end
 
 # versa
-clone_repo https://github.com/versa-labs/versa-burgers ~/code/versa-burgers
-clone_repo https://github.com/versa-labs/versa-ts.git ~/code/versa-ts
-clone_repo https://github.com/versa-labs/yc-hackathon-26.git ~/code/yc-hackathon-26
+clone_repo https://github.com/versa-labs/versa-burgers versa-burgers
+clone_repo https://github.com/versa-labs/versa-ts.git versa-ts
+clone_repo https://github.com/versa-labs/yc-hackathon-26.git yc-hackathon-26
 
 # personal
-clone_repo https://github.com/dpunj/aoc-2025.git ~/code/aoc-25
-clone_repo https://github.com/dpunj/blog.git ~/code/blog
-clone_repo https://github.com/dpunj/recrsv.git ~/code/rlm
-clone_repo https://github.com/dpunj/tldraw-mcp.git ~/code/tldraw-mcp
-clone_repo https://github.com/dpunj/xf.git ~/code/xf
-clone_repo https://github.com/dpunj/papelito.git ~/code/papelito
-clone_repo https://github.com/dpunj/spotify.git ~/code/spotify
+clone_repo https://github.com/dpunj/aoc-2025.git aoc-25
+clone_repo https://github.com/dpunj/blog.git blog
+clone_repo https://github.com/dpunj/recrsv.git rlm
+clone_repo https://github.com/dpunj/tldraw-mcp.git tldraw-mcp
+clone_repo https://github.com/dpunj/xf.git xf
+clone_repo https://github.com/dpunj/papelito.git papelito
+clone_repo https://github.com/dpunj/spotify.git spotify
 
 # collab
-clone_repo https://github.com/fonsiheruz/reply-guy.git ~/code/reply-guy
+clone_repo https://github.com/fonsiheruz/reply-guy.git reply-guy
 
 # -----------------------------------------------------------
 # 7. Reminders
