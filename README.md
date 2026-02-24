@@ -34,11 +34,12 @@ dotfiles/
 │   ├── config.toml       # Kimi Code settings
 │   └── mcp.json          # MCP servers (context7)
 │
-│  # Skills (source of truth, symlinked to ~/.claude/skills/ and amp/skills/)
+│  # Skills (source of truth, symlinked to agent skill directories)
 ├── skills/
 │   ├── rams/                        # A11y + visual design review (scored)
 │   ├── baseline-ui/                 # Anti-AI-slop UI constraints
-│   └── web-interface-guidelines/    # Vercel's 80+ web UI rules
+│   ├── web-interface-guidelines/    # Vercel's 80+ web UI rules
+│   └── modern-python/               # Python tooling guide (uv, ruff, ty)
 │
 │  # Shared across agents
 └── AGENTS.md         → ~/.config/AGENTS.md + ~/.claude/CLAUDE.md
@@ -168,17 +169,47 @@ ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-inter
 - Thinking mode enabled by default
 - MCP servers (`mcp.json` → `~/.kimi/mcp.json`): context7
 
-### Design Skills (`skills/`)
+### Skills (`skills/`)
 
-Three design review skills, available in both Claude Code (`/skill`) and Amp:
+Reusable capabilities for Claude Code (`/skill`) and Amp. All skills live in `~/dotfiles/skills/` and are symlinked to agent-specific directories.
 
-| Skill | Source | What it does |
-|-------|--------|-------------|
-| **rams** | [artivilla/agents-config](https://github.com/artivilla/agents-config) | WCAG 2.1 accessibility + visual design review with scored output |
-| **baseline-ui** | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | Opinionated anti-AI-slop constraints (Tailwind, motion, a11y) |
-| **web-interface-guidelines** | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | Comprehensive web UI compliance (80+ rules across a11y, forms, animation, perf, i18n) |
+#### Design & UI Review
 
-They complement each other: rams scores components, baseline-ui prevents slop at generation time, and web-interface-guidelines covers the full stack.
+| Skill | Source | What it does | When to use |
+|-------|--------|-------------|-------------|
+| **rams** | [artivilla/agents-config](https://github.com/artivilla/agents-config) | WCAG 2.1 accessibility + visual design review with scored output | Reviewing components for a11y violations, visual inconsistencies, missing states |
+| **baseline-ui** | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | Opinionated anti-AI-slop constraints (Tailwind, motion, a11y) | Starting UI work—apply these constraints before generating any code |
+| **web-interface-guidelines** | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | Comprehensive web UI compliance (80+ rules) | Detailed compliance check covering forms, animation, typography, perf, i18n, hydration |
+
+These three complement each other:
+- **baseline-ui** prevents slop at generation time (guardrails)
+- **rams** scores existing components with actionable fixes
+- **web-interface-guidelines** is the complete rulebook for production polish
+
+#### Development
+
+| Skill | What it does | When to use |
+|-------|-------------|-------------|
+| **modern-python** | Modern Python tooling guide (uv, ruff, ty) | Creating Python projects, writing scripts, migrating from pip/poetry/mypy/black |
+
+The modern-python skill covers:
+- Project setup with `uv` (replaces pip, poetry, pyenv)
+- Lint/format with `ruff`, typecheck with `ty`
+- PEP 723 inline metadata for standalone scripts
+- Migration guides from legacy tooling
+
+**Quick usage:**
+```bash
+# In Claude Code
+/skill rams src/Button.tsx
+/skill baseline-ui
+/skill modern-python
+
+# In Amp
+@rams src/Button.tsx
+@baseline-ui
+@modern-python
+```
 
 ### Starship (`starship.toml`)
 
