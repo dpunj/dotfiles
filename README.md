@@ -177,7 +177,7 @@ Reusable capabilities for Claude Code (`/skill`) and Amp. All skills live in `~/
 
 | Skill | Source | What it does | When to use |
 |-------|--------|-------------|-------------|
-| **rams** | [artivilla/agents-config](https://github.com/artivilla/agents-config) | WCAG 2.1 accessibility + visual design review with scored output | Reviewing components for a11y violations, visual inconsistencies, missing states |
+| **rams** | [rams.ai](https://rams.ai) | WCAG 2.1 accessibility + visual design review with scored output | Reviewing components for a11y violations, visual inconsistencies, missing states |
 | **baseline-ui** | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | Opinionated anti-AI-slop constraints (Tailwind, motion, a11y) | Starting UI work—apply these constraints before generating any code |
 | **web-interface-guidelines** | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | Comprehensive web UI compliance (80+ rules) | Detailed compliance check covering forms, animation, typography, perf, i18n, hydration |
 
@@ -225,8 +225,8 @@ brew install fish fzf zoxide starship
 
 ## Docs
 
-- [Claude Code](https://code.claude.com/docs) — [MCP](https://code.claude.com/docs/en/mcp)
-- [Amp](https://ampcode.com/manual) — [MCP](https://ampcode.com/manual#mcp)
+- [Claude Code](https://code.claude.com/docs) — [Skills](https://code.claude.com/docs/en/skills) · [MCP](https://code.claude.com/docs/en/mcp)
+- [Amp](https://ampcode.com/manual) — [Skills](https://ampcode.com/manual#skills) · [MCP](https://ampcode.com/manual#mcp)
 - [Kimi Code](https://moonshotai.github.io/kimi-cli/) — [MCP](https://moonshotai.github.io/kimi-cli/en/customization/mcp.html)
 - [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/)
 
