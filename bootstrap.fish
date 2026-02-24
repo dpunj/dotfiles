@@ -1,0 +1,231 @@
+#!/usr/bin/env fish
+# Bootstrap script for M1 migration
+# Safe to run on a lived-in machine — idempotent, never destructive
+#
+# Usage: fish ~/dotfiles/bootstrap.fish
+
+set -l GREEN (set_color green)
+set -l YELLOW (set_color yellow)
+set -l DIM (set_color brblack)
+set -l RESET (set_color normal)
+
+function log_ok
+    echo "$GREEN✓$RESET $argv"
+end
+
+function log_skip
+    echo "$DIM⏭ $argv (already exists)$RESET"
+end
+
+function log_warn
+    echo "$YELLOW⚠ $argv$RESET"
+end
+
+# -----------------------------------------------------------
+# 1. Homebrew — update & install missing formulae
+# -----------------------------------------------------------
+echo ""
+echo "═══ Homebrew ═══"
+
+if not command -q brew
+    echo "Installing Homebrew..."
+    /bin/bash -c "(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    log_ok "Homebrew installed, updating..."
+    brew update
+end
+
+set -l formulae \
+    fish fzf zoxide starship \
+    gh git fd ripgrep ast-grep shellcheck \
+    helix fnm jq htop tokei tree
+
+for pkg in $formulae
+    if brew list --formula $pkg &>/dev/null
+        log_skip $pkg
+    else
+        echo "  Installing $pkg..."
+        brew install $pkg
+    end
+end
+
+# -----------------------------------------------------------
+# 2. Runtimes
+# -----------------------------------------------------------
+echo ""
+echo "═══ Runtimes ═══"
+
+# Node via fnm
+if command -q fnm
+    set -l node_installed (fnm list 2>/dev/null | string match -r '\d+\.\d+\.\d+' | head -1)
+    if test -z "$node_installed"
+        echo "  Installing Node LTS via fnm..."
+        fnm install --lts
+        fnm default lts-latest
+    else
+        log_ok "Node $node_installed via fnm"
+    end
+end
+
+# Bun
+if command -q bun
+    log_ok "bun $(bun --version)"
+else
+    echo "  Installing bun..."
+    curl -fsSL https://bun.sh/install | bash
+end
+
+# Rust
+if command -q cargo
+    log_ok "cargo $(cargo --version | string split ' ')[2]"
+else
+    echo "  Installing rustup..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+end
+
+# uv (Python)
+if command -q uv
+    log_ok "uv $(uv --version)"
+else
+    echo "  Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+end
+
+# -----------------------------------------------------------
+# 3. Dotfiles — clone or pull
+# -----------------------------------------------------------
+echo ""
+echo "═══ Dotfiles ═══"
+
+if test -d ~/dotfiles/.git
+    log_ok "~/dotfiles exists, pulling latest..."
+    git -C ~/dotfiles pull --ff-only
+else
+    echo "  Cloning dotfiles..."
+    git clone https://github.com/dpunj/dotfiles.git ~/dotfiles
+end
+
+# -----------------------------------------------------------
+# 4. Symlinks — only create if target doesn't exist
+# -----------------------------------------------------------
+echo ""
+echo "═══ Symlinks ═══"
+
+function safe_link --argument-names src dest
+    if test -L $dest
+        log_skip $dest
+    else if test -e $dest
+        log_warn "$dest exists (not a symlink) — skipping, review manually"
+    else
+        set -l parent (dirname $dest)
+        mkdir -p $parent
+        ln -s $src $dest
+        log_ok "$dest → $src"
+    end
+end
+
+# ~/.config/ targets
+safe_link ~/dotfiles/fish ~/.config/fish
+safe_link ~/dotfiles/ghostty ~/.config/ghostty
+safe_link ~/dotfiles/amp ~/.config/amp
+safe_link ~/dotfiles/starship.toml ~/.config/starship.toml
+safe_link ~/dotfiles/AGENTS.md ~/.config/AGENTS.md
+
+# Zed (settings only — Zed manages the rest)
+mkdir -p ~/.config/zed
+safe_link ~/dotfiles/zed/settings.json ~/.config/zed/settings.json
+
+# Claude Code
+mkdir -p ~/.claude
+safe_link ~/dotfiles/AGENTS.md ~/.claude/CLAUDE.md
+safe_link ~/dotfiles/claude/settings.json ~/.claude/settings.json
+safe_link ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
+safe_link ~/dotfiles/claude/mcp.json ~/.mcp.json
+
+# Qwen Code
+mkdir -p ~/.qwen
+safe_link ~/dotfiles/qwen/settings.json ~/.qwen/settings.json
+safe_link ~/dotfiles/AGENTS.md ~/.qwen/QWEN.md
+
+# Kimi Code
+mkdir -p ~/.kimi
+safe_link ~/dotfiles/kimi/config.toml ~/.kimi/config.toml
+safe_link ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
+
+# Skills → Claude Code + Amp
+mkdir -p ~/.claude/skills
+for skill in rams baseline-ui web-interface-guidelines
+    safe_link ~/dotfiles/skills/$skill ~/.claude/skills/$skill
+    safe_link ~/dotfiles/skills/$skill ~/dotfiles/amp/skills/$skill
+end
+
+# Global gitignore (ensures local/ is ignored everywhere)
+mkdir -p ~/.config/git
+if not test -e ~/.config/git/ignore
+    echo "local/" >~/.config/git/ignore
+    log_ok "Created ~/.config/git/ignore (ignores local/)"
+else if not grep -q "local/" ~/.config/git/ignore
+    echo "local/" >>~/.config/git/ignore
+    log_ok "Added local/ to ~/.config/git/ignore"
+else
+    log_skip "~/.config/git/ignore already has local/"
+end
+
+# -----------------------------------------------------------
+# 5. Git config
+# -----------------------------------------------------------
+echo ""
+echo "═══ Git config ═══"
+
+git config --global user.email "dvx2492@gmail.com"
+git config --global init.defaultBranch main
+log_ok "git user.email + defaultBranch set"
+
+# -----------------------------------------------------------
+# 6. Clone repos into ~/code/
+# -----------------------------------------------------------
+echo ""
+echo "═══ Repos ═══"
+
+mkdir -p ~/code
+
+function clone_repo --argument-names url dirname
+    if test -d ~/code/$dirname
+        log_skip "~/code/$dirname"
+    else
+        echo "  Cloning $dirname..."
+        git clone $url ~/code/$dirname
+    end
+end
+
+# versa
+clone_repo https://github.com/versa-labs/versa-burgers ~/code/versa-burgers
+clone_repo https://github.com/versa-labs/versa-ts.git ~/code/versa-ts
+clone_repo https://github.com/versa-labs/yc-hackathon-26.git ~/code/yc-hackathon-26
+
+# personal
+clone_repo https://github.com/dpunj/aoc-2025.git ~/code/aoc-25
+clone_repo https://github.com/dpunj/blog.git ~/code/blog
+clone_repo https://github.com/dpunj/recrsv.git ~/code/rlm
+clone_repo https://github.com/dpunj/tldraw-mcp.git ~/code/tldraw-mcp
+clone_repo https://github.com/dpunj/xf.git ~/code/xf
+clone_repo https://github.com/dpunj/papelito.git ~/code/papelito
+clone_repo https://github.com/dpunj/spotify.git ~/code/spotify
+
+# collab
+clone_repo https://github.com/fonsiheruz/reply-guy.git ~/code/reply-guy
+
+# -----------------------------------------------------------
+# 7. Reminders
+# -----------------------------------------------------------
+echo ""
+echo "═══ Manual steps ═══"
+echo "  1. Install Berkeley Mono font"
+echo "  2. Install apps: Ghostty, Zed, Amp CLI, Claude Code, Kimi, Qwen Code"
+echo "  3. Auth: gh auth login"
+echo "  4. Auth: agent OAuth flows (Claude, Amp, Kimi, Qwen)"
+echo "  5. Auth: MCP tokens (Linear, Sentry)"
+echo "  6. Set fish as default shell: chsh -s (which fish)"
+echo "  7. Verify versa-burgers prod deploy still works from this machine!"
+echo ""
+echo "$GREEN🎉 Bootstrap complete!$RESET"
