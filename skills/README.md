@@ -149,5 +149,5 @@ Skills can be used together for comprehensive workflows:
 |-------|----------|---------|
 | baseline-ui | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | MIT |
 | modern-python | Based on [trailofbits/cookiecutter-python](https://github.com/trailofbits/cookiecutter-python) | Apache-2.0 |
-| rams | [artivilla/agents-config](https://github.com/artivilla/agents-config) | MIT |
+| rams | [rams.ai](https://rams.ai) | MIT |
 | web-interface-guidelines | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | MIT |
