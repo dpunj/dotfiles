@@ -169,7 +169,7 @@ ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-inter
 - Thinking mode enabled by default
 - MCP servers (`mcp.json` → `~/.kimi/mcp.json`): context7
 
-### Skills (`skills/`)
+### [Skills](./skills/) (`skills/`)
 
 Reusable capabilities for Claude Code (`/skill`) and Amp. All skills live in `~/dotfiles/skills/` and are symlinked to agent-specific directories.
 
