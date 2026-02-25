@@ -10,23 +10,32 @@
     }
   },
   "context": {
-    "fileName": ["QWEN.md", "AGENTS.md"]
+    "fileName": [
+      "QWEN.md",
+      "AGENTS.md"
+    ]
   },
   "mcpServers": {
     "linear": {
       "command": "npx",
-      "args": ["mcp-remote", "https://mcp.linear.app/sse"]
-    },
-    "sentry": {
-      "url": "https://mcp.sentry.dev/mcp"
+      "args": [
+        "mcp-remote",
+        "https://mcp.linear.app/sse"
+      ]
     },
     "tldraw": {
       "command": "bun",
-      "args": ["run", "/Users/divesh/code/tldraw-mcp/src/index.ts"]
+      "args": [
+        "run",
+        "/Users/divesh/code/tldraw-mcp/src/index.ts"
+      ]
     },
     "context7": {
       "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"]
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ]
     }
   }
 }
