@@ -147,7 +147,7 @@ ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-inter
 ### Amp (`amp/settings.json`)
 
 - `amp.fuzzy.alwaysIncludePaths: ["local/**"]` — exposes gitignored `local/` to fuzzy search
-- MCP servers (`amp.mcpServers`): context7, linear, sentry, tldraw
+- MCP servers (`amp.mcpServers`): context7, linear, tldraw
 
 ### Claude Code (`claude/`)
 
