@@ -8,9 +8,6 @@
         "https://mcp.linear.app/sse"
       ]
     },
-    "sentry": {
-      "url": "https://mcp.sentry.dev/mcp"
-    },
     "tldraw": {
       "command": "bun",
       "args": ["run", "~/code/tldraw-mcp/src/index.ts"]
