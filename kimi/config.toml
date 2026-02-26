@@ -6,7 +6,7 @@ default_yolo = false
 provider = "managed:kimi-code"
 model = "kimi-for-coding"
 max_context_size = 262144
-capabilities = ["image_in", "video_in", "thinking"]
+capabilities = ["thinking", "video_in", "image_in"]
 
 [providers."managed:kimi-code"]
 type = "kimi"
