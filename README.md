@@ -12,7 +12,8 @@ dotfiles/
 │  # ~/.config/ targets
 ├── amp/              → ~/.config/amp/
 │   ├── settings.json     # Amp agent settings + MCP servers
-│   └── skills/           # Custom Amp skills (symlinks → skills/)
+│   └── skills/           # Custom Amp skills (symlinks → skills/ + amp/skills/)
+│       └── obsidian-markdown/   # Obsidian Flavored Markdown reference
 ├── fish/             → ~/.config/fish/
 │   ├── config.fish       # Shell config (PATH, interactive tools)
 │   ├── completions/      # Custom completions
@@ -114,6 +115,9 @@ ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-
 ln -s ~/dotfiles/skills/rams ~/dotfiles/amp/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-interface-guidelines
+
+# Obsidian skill (lives in amp/skills/ directly, symlink to ~/.config/amp/skills/)
+ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-markdown
 ```
 
 ## What's Configured
@@ -188,15 +192,10 @@ These three complement each other:
 
 #### Development
 
-| Skill | What it does | When to use |
-|-------|-------------|-------------|
-| **modern-python** | Modern Python tooling guide (uv, ruff, ty) | Creating Python projects, writing scripts, migrating from pip/poetry/mypy/black |
-
-The modern-python skill covers:
-- Project setup with `uv` (replaces pip, poetry, pyenv)
-- Lint/format with `ruff`, typecheck with `ty`
-- PEP 723 inline metadata for standalone scripts
-- Migration guides from legacy tooling
+| Skill | Source | What it does | When to use |
+|-------|--------|-------------|-------------|
+| **modern-python** | — | Modern Python tooling guide (uv, ruff, ty) | Creating Python projects, writing scripts, migrating from pip/poetry/mypy/black |
+| **obsidian-markdown** | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Obsidian Flavored Markdown reference (wikilinks, embeds, callouts, properties) | Working with .md files in Obsidian vaults |
 
 **Quick usage:**
 ```bash
