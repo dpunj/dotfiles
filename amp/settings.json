@@ -17,8 +17,7 @@
       "args": ["-y", "@upstash/context7-mcp@latest"]
     },
     "stripe": {
-      "command": "npx",
-      "args": ["mcp-remote", "https://mcp.stripe.com"]
+      "url": "https://mcp.stripe.com"
     }
   }
 }
