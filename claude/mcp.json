@@ -5,8 +5,8 @@
       "args": ["-y", "@upstash/context7-mcp"]
     },
     "stripe": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.stripe.com"]
+      "type": "http",
+      "url": "https://mcp.stripe.com/"
     }
   }
 }
