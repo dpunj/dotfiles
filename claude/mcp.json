@@ -6,7 +6,7 @@
     },
     "stripe": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.stripe.com/sse"]
+      "args": ["-y", "mcp-remote", "https://mcp.stripe.com"]
     }
   }
 }

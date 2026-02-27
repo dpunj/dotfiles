@@ -18,7 +18,7 @@
     },
     "stripe": {
       "command": "npx",
-      "args": ["mcp-remote", "https://mcp.stripe.com/sse"]
+      "args": ["mcp-remote", "https://mcp.stripe.com"]
     }
   }
 }
