@@ -204,6 +204,7 @@ clone_repo git@github.com:versa-labs/versa-ts.git versa-ts
 clone_repo git@github.com:versa-labs/yc-hackathon-26.git yc-hackathon-26
 
 # personal
+clone_repo git@github.com:dpunj/changeloz.git changeloz
 clone_repo git@github.com:dpunj/aoc-2025.git aoc-25
 clone_repo git@github.com:dpunj/blog.git blog
 clone_repo git@github.com:dpunj/recrsv.git rlm
