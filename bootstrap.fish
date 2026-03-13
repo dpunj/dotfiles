@@ -102,7 +102,7 @@ if test -d ~/dotfiles/.git
     git -C ~/dotfiles pull --ff-only
 else
     echo "  Cloning dotfiles..."
-    git clone https://github.com/dpunj/dotfiles.git ~/dotfiles
+    git clone git@github.com:dpunj/dotfiles.git ~/dotfiles
 end
 
 # -----------------------------------------------------------
@@ -199,21 +199,21 @@ function clone_repo --argument-names url dirname
 end
 
 # versa
-clone_repo https://github.com/versa-labs/versa-burgers versa-burgers
-clone_repo https://github.com/versa-labs/versa-ts.git versa-ts
-clone_repo https://github.com/versa-labs/yc-hackathon-26.git yc-hackathon-26
+clone_repo git@github.com:versa-labs/versa-burgers.git versa-burgers
+clone_repo git@github.com:versa-labs/versa-ts.git versa-ts
+clone_repo git@github.com:versa-labs/yc-hackathon-26.git yc-hackathon-26
 
 # personal
-clone_repo https://github.com/dpunj/aoc-2025.git aoc-25
-clone_repo https://github.com/dpunj/blog.git blog
-clone_repo https://github.com/dpunj/recrsv.git rlm
-clone_repo https://github.com/dpunj/tldraw-mcp.git tldraw-mcp
-clone_repo https://github.com/dpunj/xf.git xf
-clone_repo https://github.com/dpunj/papelito.git papelito
-clone_repo https://github.com/dpunj/spotify.git spotify
+clone_repo git@github.com:dpunj/aoc-2025.git aoc-25
+clone_repo git@github.com:dpunj/blog.git blog
+clone_repo git@github.com:dpunj/recrsv.git rlm
+clone_repo git@github.com:dpunj/tldraw-mcp.git tldraw-mcp
+clone_repo git@github.com:dpunj/xf.git xf
+clone_repo git@github.com:dpunj/papelito.git papelito
+clone_repo git@github.com:dpunj/spotify.git spotify
 
 # collab
-clone_repo https://github.com/fonsiheruz/reply-guy.git reply-guy
+clone_repo git@github.com:fonsiheruz/reply-guy.git reply-guy
 
 # -----------------------------------------------------------
 # 7. Reminders
