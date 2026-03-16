@@ -142,6 +142,10 @@ safe_link ~/dotfiles/claude/settings.json ~/.claude/settings.json
 safe_link ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 safe_link ~/dotfiles/claude/mcp.json ~/.mcp.json
 
+# Pi agent
+mkdir -p ~/.pi/agent
+safe_link ~/dotfiles/pi/extensions ~/.pi/agent/extensions
+
 # Qwen Code
 mkdir -p ~/.qwen
 safe_link ~/dotfiles/qwen/settings.json ~/.qwen/settings.json
