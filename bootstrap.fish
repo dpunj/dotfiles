@@ -157,11 +157,13 @@ mkdir -p ~/.kimi
 safe_link ~/dotfiles/kimi/config.toml ~/.kimi/config.toml
 safe_link ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
 
-# Skills → Claude Code + Amp
+# Skills → Claude Code + Amp + Pi
 mkdir -p ~/.claude/skills
+mkdir -p ~/.pi/agent/skills
 for skill in rams baseline-ui web-interface-guidelines
     safe_link ~/dotfiles/skills/$skill ~/.claude/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/dotfiles/amp/skills/$skill
+    safe_link ~/dotfiles/skills/$skill ~/.pi/agent/skills/$skill
 end
 
 # Global gitignore (ensures local/ is ignored everywhere)
