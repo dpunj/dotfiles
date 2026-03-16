@@ -145,6 +145,7 @@ safe_link ~/dotfiles/claude/mcp.json ~/.mcp.json
 # Pi agent
 mkdir -p ~/.pi/agent
 safe_link ~/dotfiles/pi/extensions ~/.pi/agent/extensions
+safe_link ~/dotfiles/pi/themes ~/.pi/agent/themes
 
 # Qwen Code
 mkdir -p ~/.qwen
