@@ -37,8 +37,9 @@ end
 
 set -l formulae \
     fish fzf zoxide starship \
-    gh git fd ripgrep ast-grep shellcheck \
-    helix fnm jq htop tokei tree
+    gh git fd ripgrep ast-grep shellcheck shfmt actionlint zizmor \
+    helix fnm jq htop tokei tree \
+    libpq redis
 
 for pkg in $formulae
     if brew list --formula $pkg &>/dev/null
