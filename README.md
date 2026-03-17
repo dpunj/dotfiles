@@ -24,7 +24,22 @@ dotfiles/
 ├── zed/settings.json → ~/.config/zed/settings.json
 ├── starship.toml     → ~/.config/starship.toml
 │
-│  # Agent dotdir targets (~/.claude/, ~/.qwen/, ~/.kimi/)
+│  # Agent dotdir targets (~/.pi/, ~/.claude/, ~/.qwen/, ~/.kimi/)
+├── pi/               → ~/.pi/agent/ (files + dirs symlinked individually)
+│   ├── AGENTS.md         → ~/.pi/agent/AGENTS.md
+│   ├── settings.json     → ~/.pi/agent/settings.json
+│   ├── extensions/       → ~/.pi/agent/extensions/
+│   │   ├── auto-session-name.ts  # Auto-names sessions from first message
+│   │   ├── compact-header.ts     # Compact chat header
+│   │   ├── custom-footer.ts      # Enhanced status bar (tokens, cost, context%, timer)
+│   │   ├── git-guard.ts          # Git safety guardrails
+│   │   ├── safe-guard.ts         # File safety guardrails
+│   │   └── music/                # Music player extension
+│   ├── prompts/          → ~/.pi/agent/prompts/
+│   │   ├── commit.md    fix.md    review.md
+│   │   ├── explain.md   test.md
+│   └── themes/
+│       └── ocean-breeze.json     # Custom ocean theme (→ ~/.pi/agent/themes/themes/)
 ├── claude/               (files symlinked individually)
 │   ├── mcp.json          → ~/.mcp.json
 │   ├── settings.json     → ~/.claude/settings.json
@@ -52,6 +67,7 @@ All coding agents share a single `AGENTS.md` — one file, symlinked per agent:
 
 | Agent | Reads from | Symlink |
 |-------|-----------|---------|
+| Pi | `~/.pi/agent/AGENTS.md` | `~/dotfiles/pi/AGENTS.md` → `~/.pi/agent/AGENTS.md` (pi-specific, not global) |
 | Claude Code | `~/.claude/CLAUDE.md` | `~/dotfiles/AGENTS.md` → `~/.claude/CLAUDE.md` |
 | Amp | `~/.config/AGENTS.md` | `~/dotfiles/AGENTS.md` → `~/.config/AGENTS.md` |
 | Qwen Code | `~/.qwen/QWEN.md` | `~/dotfiles/AGENTS.md` → `~/.qwen/QWEN.md` |
@@ -91,6 +107,14 @@ ln -s ~/dotfiles/zed/settings.json ~/.config/zed/settings.json
 # AGENTS.md (global agent instructions — Amp reads ~/.config/AGENTS.md)
 ln -s ~/dotfiles/AGENTS.md ~/.config/AGENTS.md
 
+# Pi (symlink individual files + directories into ~/.pi/agent/)
+ln -s ~/dotfiles/pi/AGENTS.md ~/.pi/agent/AGENTS.md
+ln -s ~/dotfiles/pi/settings.json ~/.pi/agent/settings.json
+ln -s ~/dotfiles/pi/extensions ~/.pi/agent/extensions
+ln -s ~/dotfiles/pi/prompts ~/.pi/agent/prompts
+# themes/ was already symlinked at ~/.pi/agent/themes/themes/
+# (pi discovers theme files in nested directories)
+
 # Claude Code reads ~/.claude/CLAUDE.md (symlink to same file)
 ln -s ~/dotfiles/AGENTS.md ~/.claude/CLAUDE.md
 
@@ -108,7 +132,10 @@ ln -s ~/dotfiles/AGENTS.md ~/.qwen/QWEN.md
 ln -s ~/dotfiles/kimi/config.toml ~/.kimi/config.toml
 ln -s ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
 
-# Design skills (symlink to Claude Code + Amp)
+# Design skills (symlink to Pi, Claude Code + Amp)
+ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
+ln -s ~/dotfiles/skills/baseline-ui ~/.pi/agent/skills/baseline-ui
+ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
@@ -152,6 +179,20 @@ ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-mark
 
 - `amp.fuzzy.alwaysIncludePaths: ["local/**"]` — exposes gitignored `local/` to fuzzy search
 - MCP servers (`amp.mcpServers`): context7, linear, tldraw
+
+### Pi (`pi/`)
+
+- Model: Claude Opus 4.6 via Anthropic, thinking level high
+- Theme: `ocean-breeze` (custom dark ocean palette)
+- Packages: `@ifi/oh-pi-themes` (community themes), `pi-interactive-shell` (agent overlay)
+- Extensions:
+  - `custom-footer.ts` — single-line status bar with color-coded cost/context% (muted → warning → error)
+  - `compact-header.ts` — minimal chat header
+  - `auto-session-name.ts` — names sessions from first message
+  - `git-guard.ts` / `safe-guard.ts` — safety guardrails for git and file ops
+  - `music/` — music player
+- Prompt templates: `commit`, `explain`, `fix`, `review`, `test`
+- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines)
 
 ### Claude Code (`claude/`)
 
@@ -224,6 +265,7 @@ brew install fish fzf zoxide starship
 
 ## Docs
 
+- [Pi](https://github.com/badlogic/pi-mono) — [Themes](docs/themes.md) · [Extensions](docs/extensions.md) · [Skills](docs/skills.md)
 - [Claude Code](https://code.claude.com/docs) — [Skills](https://code.claude.com/docs/en/skills) · [MCP](https://code.claude.com/docs/en/mcp)
 - [Amp](https://ampcode.com/manual) — [Skills](https://ampcode.com/manual#skills) · [MCP](https://ampcode.com/manual#mcp)
 - [Kimi Code](https://moonshotai.github.io/kimi-cli/) — [MCP](https://moonshotai.github.io/kimi-cli/en/customization/mcp.html)
