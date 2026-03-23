@@ -16,6 +16,9 @@ if status is-interactive
     starship init fish | source
 end
 
+# Aliases
+alias lg lazygit
+
 # Claude Code via local LM Studio
 function claude-local
     ANTHROPIC_BASE_URL=http://localhost:1234 \
