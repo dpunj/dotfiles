@@ -158,7 +158,12 @@ mkdir -p ~/.kimi
 safe_link ~/dotfiles/kimi/config.toml ~/.kimi/config.toml
 safe_link ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
 
-# Skills → Claude Code + Amp + Pi
+# Hermes Agent
+mkdir -p ~/.hermes
+safe_link ~/dotfiles/hermes/config.yaml ~/.hermes/config.yaml
+safe_link ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
+
+# Skills → Claude Code + Amp + Pi (Hermes picks up ~/dotfiles/skills/ via external_dirs)
 mkdir -p ~/.claude/skills
 mkdir -p ~/.pi/agent/skills
 for skill in rams baseline-ui web-interface-guidelines
@@ -230,7 +235,7 @@ clone_repo git@github.com:fonsiheruz/reply-guy.git reply-guy
 echo ""
 echo "═══ Manual steps ═══"
 echo "  1. Install Berkeley Mono font"
-echo "  2. Install apps: Ghostty, Zed, Amp CLI, Claude Code, Kimi, Qwen Code"
+echo "  2. Install apps: Ghostty, Zed, Amp CLI, Claude Code, Kimi, Qwen Code, Hermes Agent"
 echo "  3. Auth: gh auth login"
 echo "  4. Auth: agent OAuth flows (Claude, Amp, Kimi, Qwen)"
 echo "  5. Auth: MCP tokens (Linear)"
