@@ -24,7 +24,10 @@ dotfiles/
 ├── zed/settings.json → ~/.config/zed/settings.json
 ├── starship.toml     → ~/.config/starship.toml
 │
-│  # Agent dotdir targets (~/.pi/, ~/.claude/, ~/.qwen/, ~/.kimi/)
+│  # Agent dotdir targets (~/.pi/, ~/.claude/, ~/.qwen/, ~/.kimi/, ~/.hermes/)
+├── hermes/           → ~/.hermes/ (files symlinked individually)
+│   ├── config.yaml      → ~/.hermes/config.yaml
+│   └── SOUL.md          → ~/.hermes/SOUL.md
 ├── pi/               → ~/.pi/agent/ (files + dirs symlinked individually)
 │   ├── AGENTS.md         → ~/.pi/agent/AGENTS.md
 │   ├── settings.json     → ~/.pi/agent/settings.json
@@ -72,6 +75,7 @@ All coding agents share a single `AGENTS.md` — one file, symlinked per agent:
 | Amp | `~/.config/AGENTS.md` | `~/dotfiles/AGENTS.md` → `~/.config/AGENTS.md` |
 | Qwen Code | `~/.qwen/QWEN.md` | `~/dotfiles/AGENTS.md` → `~/.qwen/QWEN.md` |
 | Kimi Code | `AGENTS.md` in working dir | Reads `~/dotfiles/AGENTS.md` directly |
+| Hermes Agent | `~/.hermes/SOUL.md` | `~/dotfiles/hermes/SOUL.md` → `~/.hermes/SOUL.md` (persona only — dev standards via shared skills) |
 
 ### `local/` scratch directory
 
@@ -131,6 +135,11 @@ ln -s ~/dotfiles/AGENTS.md ~/.qwen/QWEN.md
 # Kimi Code settings + MCP servers
 ln -s ~/dotfiles/kimi/config.toml ~/.kimi/config.toml
 ln -s ~/dotfiles/kimi/mcp.json ~/.kimi/mcp.json
+
+# Hermes Agent
+mkdir -p ~/.hermes
+ln -s ~/dotfiles/hermes/config.yaml ~/.hermes/config.yaml
+ln -s ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
 
 # Design skills (symlink to Pi, Claude Code + Amp)
 ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
@@ -213,6 +222,15 @@ ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-mark
 - Model: `kimi-for-coding` (Kimi K2.5, 262k context, via OAuth)
 - Thinking mode enabled by default
 - MCP servers (`mcp.json` → `~/.kimi/mcp.json`): context7
+
+### Hermes Agent (`hermes/`)
+
+- Model: Claude Opus 4.6 via Anthropic
+- Persona: `SOUL.md` — minimal, direct, terminal-native
+- Shared skills: picks up `~/dotfiles/skills/` via `skills.external_dirs` in config.yaml
+- MCP servers: configured in `config.yaml` under `mcp_servers` key (none yet)
+- Memory: persistent across sessions (`~/.hermes/memories/` — not symlinked, runtime state)
+- API keys: `~/.hermes/.env` (not symlinked — sensitive)
 
 ### [Skills](./skills/) (`skills/`)
 
