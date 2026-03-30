@@ -39,7 +39,7 @@ set -l formulae \
     fish fzf zoxide starship \
     gh git fd ripgrep ast-grep shellcheck shfmt actionlint zizmor \
     helix fnm jq htop tokei tree \
-    libpq redis flyctl
+    libpq redis flyctl ollama
 
 for pkg in $formulae
     if brew list --formula $pkg &>/dev/null
@@ -230,7 +230,40 @@ clone_repo git@github.com:dpunj/spotify.git spotify
 clone_repo git@github.com:fonsiheruz/reply-guy.git reply-guy
 
 # -----------------------------------------------------------
-# 7. Reminders
+# 7. Ollama — env vars + service
+# -----------------------------------------------------------
+echo ""
+echo "═══ Ollama ═══"
+
+if command -q ollama
+    launchctl setenv OLLAMA_FLASH_ATTENTION 1
+    launchctl setenv OLLAMA_KV_CACHE_TYPE q8_0
+    launchctl setenv OLLAMA_MAX_LOADED_MODELS 2
+    launchctl setenv OLLAMA_NUM_PARALLEL 1
+    launchctl setenv OLLAMA_KEEP_ALIVE -1
+    log_ok "Ollama env vars set via launchctl"
+
+    if brew services list | grep -q "ollama.*started"
+        log_skip "ollama service"
+    else
+        brew services start ollama
+        log_ok "Ollama service started"
+    end
+
+    for model in qwen3.5:27b qwen3.5:9b
+        if ollama list 2>/dev/null | grep -q $model
+            log_skip "ollama model $model"
+        else
+            echo "  Pulling $model..."
+            ollama pull $model
+        end
+    end
+else
+    log_warn "ollama not found — install failed?"
+end
+
+# -----------------------------------------------------------
+# 8. Reminders
 # -----------------------------------------------------------
 echo ""
 echo "═══ Manual steps ═══"
