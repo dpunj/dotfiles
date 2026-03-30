@@ -39,7 +39,7 @@ set -l formulae \
     fish fzf zoxide starship \
     gh git fd ripgrep ast-grep shellcheck shfmt actionlint zizmor \
     helix fnm jq htop tokei tree \
-    libpq redis flyctl ollama
+    libpq redis flyctl
 
 for pkg in $formulae
     if brew list --formula $pkg &>/dev/null
@@ -230,49 +230,20 @@ clone_repo git@github.com:dpunj/spotify.git spotify
 clone_repo git@github.com:fonsiheruz/reply-guy.git reply-guy
 
 # -----------------------------------------------------------
-# 7. Ollama — env vars + service
-# -----------------------------------------------------------
-echo ""
-echo "═══ Ollama ═══"
-
-if command -q ollama
-    launchctl setenv OLLAMA_FLASH_ATTENTION 1
-    launchctl setenv OLLAMA_KV_CACHE_TYPE q8_0
-    launchctl setenv OLLAMA_MAX_LOADED_MODELS 2
-    launchctl setenv OLLAMA_NUM_PARALLEL 1
-    launchctl setenv OLLAMA_KEEP_ALIVE -1
-    log_ok "Ollama env vars set via launchctl"
-
-    if brew services list | grep -q "ollama.*started"
-        log_skip "ollama service"
-    else
-        brew services start ollama
-        log_ok "Ollama service started"
-    end
-
-    for model in qwen3.5:27b qwen3.5:9b
-        if ollama list 2>/dev/null | grep -q $model
-            log_skip "ollama model $model"
-        else
-            echo "  Pulling $model..."
-            ollama pull $model
-        end
-    end
-else
-    log_warn "ollama not found — install failed?"
-end
-
-# -----------------------------------------------------------
-# 8. Reminders
+# 7. Reminders
 # -----------------------------------------------------------
 echo ""
 echo "═══ Manual steps ═══"
 echo "  1. Install Berkeley Mono font"
 echo "  2. Install apps: Ghostty, Zed, Amp CLI, Claude Code, Kimi, Qwen Code, Hermes Agent"
-echo "  3. Auth: gh auth login"
-echo "  4. Auth: agent OAuth flows (Claude, Amp, Kimi, Qwen)"
-echo "  5. Auth: MCP tokens (Linear)"
-echo "  6. Set fish as default shell: chsh -s (which fish)"
-echo "  7. Verify versa-burgers prod deploy still works from this machine!"
+echo "  3. Install Ollama.app: curl -fsSL https://ollama.com/install.sh | sh"
+echo "     Then: open -a Ollama && ollama pull qwen3.5:27b && ollama pull qwen3.5:9b"
+echo "     ⚠ Do NOT use brew install ollama (no Metal GPU on M5)"
+echo "     ⚠ Do NOT set OLLAMA_FLASH_ATTENTION or OLLAMA_KV_CACHE_TYPE (Metal shader crash)"
+echo "  4. Auth: gh auth login"
+echo "  5. Auth: agent OAuth flows (Claude, Amp, Kimi, Qwen)"
+echo "  6. Auth: MCP tokens (Linear)"
+echo "  7. Set fish as default shell: chsh -s (which fish)"
+echo "  8. Verify versa-burgers prod deploy still works from this machine!"
 echo ""
 echo "$GREEN🎉 Bootstrap complete!$RESET"
