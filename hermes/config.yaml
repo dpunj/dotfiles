@@ -1,6 +1,9 @@
 model:
-  default: claude-opus-4-6
-  provider: anthropic
+  default: qwen3.5:27b
+  provider: custom
+  base_url: http://localhost:11434/v1
+  api_key: ollama
+  context_length: 32768
 toolsets:
 - hermes-cli
 agent:
@@ -12,11 +15,11 @@ terminal:
   persistent_shell: true
 compression:
   enabled: true
-  threshold: 0.5
+  threshold: 0.45
   target_ratio: 0.2
   protect_last_n: 20
-  summary_model: google/gemini-3-flash-preview
-  summary_provider: auto
+  summary_model: qwen3.5:9b
+  summary_base_url: http://localhost:11434/v1
 memory:
   memory_enabled: true
   user_profile_enabled: true
@@ -26,10 +29,32 @@ memory:
   flush_min_turns: 6
 delegation:
   max_iterations: 50
+  model: qwen3.5:9b
+  base_url: http://localhost:11434/v1
+  api_key: ollama
   default_toolsets:
   - terminal
   - file
   - web
+auxiliary:
+  vision:
+    base_url: http://localhost:11434/v1
+    api_key: ollama
+    model: qwen3.5:27b
+  web_extract:
+    base_url: http://localhost:11434/v1
+    api_key: ollama
+    model: qwen3.5:9b
+smart_model_routing:
+  enabled: true
+  max_simple_chars: 160
+  max_simple_words: 28
+  cheap_model:
+    base_url: http://localhost:11434/v1
+    model: qwen3.5:9b
+fallback_model:
+  provider: openrouter
+  model: anthropic/claude-sonnet-4
 skills:
   external_dirs:
   - ~/dotfiles/skills
