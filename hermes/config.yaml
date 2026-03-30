@@ -6,6 +6,9 @@ custom_providers:
   - name: local
     base_url: http://localhost:11434/v1
 
+toolsets:
+  - hermes-cli
+
 agent:
   max_turns: 60
   tool_use_enforcement: auto
@@ -17,7 +20,7 @@ terminal:
 
 compression:
   enabled: true
-  threshold: 0.50
+  threshold: 0.5
   target_ratio: 0.2
   protect_last_n: 20
   summary_model: qwen3.5:9b
@@ -32,10 +35,9 @@ memory:
   flush_min_turns: 6
 
 delegation:
+  model: claude-opus-4-6
+  provider: anthropic
   max_iterations: 50
-  model: qwen3.5:9b
-  base_url: http://localhost:11434/v1
-  api_key: ollama
   default_toolsets:
     - terminal
     - file
@@ -50,14 +52,6 @@ auxiliary:
   web_extract:
     base_url: http://localhost:11434/v1
     api_key: ollama
-    model: qwen3.5:9b
-
-smart_model_routing:
-  enabled: true
-  max_simple_chars: 160
-  max_simple_words: 28
-  cheap_model:
-    base_url: http://localhost:11434/v1
     model: qwen3.5:9b
 
 fallback_model:
@@ -77,9 +71,6 @@ display:
 security:
   redact_secrets: true
   tirith_enabled: true
-
-toolsets:
-  - hermes-cli
 
 platform_toolsets:
   cli:
