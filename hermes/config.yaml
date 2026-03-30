@@ -1,22 +1,28 @@
 model:
   default: claude-opus-4-6
   provider: anthropic
-toolsets:
-- hermes-cli
+
+custom_providers:
+  - name: local
+    base_url: http://localhost:11434/v1
+
 agent:
   max_turns: 60
   tool_use_enforcement: auto
   reasoning_effort: medium
+
 terminal:
   backend: local
   persistent_shell: true
+
 compression:
   enabled: true
-  threshold: 0.5
+  threshold: 0.50
   target_ratio: 0.2
   protect_last_n: 20
-  summary_model: google/gemini-3-flash-preview
-  summary_provider: auto
+  summary_model: qwen3.5:9b
+  summary_base_url: http://localhost:11434/v1
+
 memory:
   memory_enabled: true
   user_profile_enabled: true
@@ -24,37 +30,71 @@ memory:
   user_char_limit: 1375
   nudge_interval: 10
   flush_min_turns: 6
+
 delegation:
   max_iterations: 50
+  model: qwen3.5:9b
+  base_url: http://localhost:11434/v1
+  api_key: ollama
   default_toolsets:
-  - terminal
-  - file
-  - web
+    - terminal
+    - file
+    - web
+
+auxiliary:
+  vision:
+    base_url: http://localhost:11434/v1
+    api_key: ollama
+    model: qwen3.5:27b
+    timeout: 60
+  web_extract:
+    base_url: http://localhost:11434/v1
+    api_key: ollama
+    model: qwen3.5:9b
+
+smart_model_routing:
+  enabled: true
+  max_simple_chars: 160
+  max_simple_words: 28
+  cheap_model:
+    base_url: http://localhost:11434/v1
+    model: qwen3.5:9b
+
+fallback_model:
+  provider: openrouter
+  model: anthropic/claude-sonnet-4
+
 skills:
   external_dirs:
-  - ~/dotfiles/skills
+    - ~/dotfiles/skills
+
 display:
   compact: false
   personality: ''
   streaming: true
   tool_progress: all
+
 security:
   redact_secrets: true
   tirith_enabled: true
+
+toolsets:
+  - hermes-cli
+
 platform_toolsets:
   cli:
-  - browser
-  - clarify
-  - code_execution
-  - cronjob
-  - delegation
-  - file
-  - image_gen
-  - memory
-  - session_search
-  - skills
-  - terminal
-  - todo
-  - tts
-  - vision
-  - web
+    - browser
+    - clarify
+    - code_execution
+    - cronjob
+    - delegation
+    - file
+    - image_gen
+    - memory
+    - session_search
+    - skills
+    - terminal
+    - todo
+    - tts
+    - vision
+    - web

@@ -1,11 +1,12 @@
 {
-  "lastChangelogVersion": "0.58.4",
+  "lastChangelogVersion": "0.61.1",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-6",
   "theme": "ocean-breeze",
   "packages": [
     "npm:@ifi/oh-pi-themes",
-    "npm:pi-interactive-shell"
+    "npm:pi-interactive-shell",
+    "npm:@zenobius/pi-worktrees"
   ],
   "defaultThinkingLevel": "high"
 }
