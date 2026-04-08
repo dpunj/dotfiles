@@ -23,8 +23,6 @@ compression:
   threshold: 0.5
   target_ratio: 0.2
   protect_last_n: 20
-  summary_model: qwen3.5:9b
-  summary_base_url: http://localhost:11434/v1
 
 memory:
   memory_enabled: true
@@ -45,14 +43,9 @@ delegation:
 
 auxiliary:
   vision:
-    base_url: http://localhost:11434/v1
-    api_key: ollama
-    model: qwen3.5:27b
+    provider: anthropic
+    model: claude-sonnet-4-20250514
     timeout: 60
-  web_extract:
-    base_url: http://localhost:11434/v1
-    api_key: ollama
-    model: qwen3.5:9b
 
 fallback_model:
   provider: openrouter
