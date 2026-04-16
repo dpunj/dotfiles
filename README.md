@@ -58,7 +58,8 @@ dotfiles/
 │   ├── rams/                        # A11y + visual design review (scored)
 │   ├── baseline-ui/                 # Anti-AI-slop UI constraints
 │   ├── web-interface-guidelines/    # Vercel's 80+ web UI rules
-│   └── modern-python/               # Python tooling guide (uv, ruff, ty)
+│   ├── modern-python/               # Python tooling guide (uv, ruff, ty)
+│   └── tdd/                         # Test-driven development workflow
 │
 │  # Shared across agents
 └── AGENTS.md         → ~/.config/AGENTS.md + ~/.claude/CLAUDE.md
@@ -141,16 +142,19 @@ mkdir -p ~/.hermes
 ln -s ~/dotfiles/hermes/config.yaml ~/.hermes/config.yaml
 ln -s ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
 
-# Design skills (symlink to Pi, Claude Code + Amp)
+# Shared skills (symlink to Pi, Claude Code + Amp)
 ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.pi/agent/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interface-guidelines
+ln -s ~/dotfiles/skills/tdd ~/.pi/agent/skills/tdd
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
+ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
 ln -s ~/dotfiles/skills/rams ~/dotfiles/amp/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-interface-guidelines
+ln -s ~/dotfiles/skills/tdd ~/dotfiles/amp/skills/tdd
 
 # Obsidian skill (lives in amp/skills/ directly, symlink to ~/.config/amp/skills/)
 ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-markdown
@@ -201,7 +205,7 @@ ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-mark
   - `git-guard.ts` / `safe-guard.ts` — safety guardrails for git and file ops
   - `music/` — music player
 - Prompt templates: `commit`, `explain`, `fix`, `review`, `test`
-- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines)
+- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, tdd)
 
 ### Claude Code (`claude/`)
 
@@ -254,19 +258,26 @@ These three complement each other:
 | Skill | Source | What it does | When to use |
 |-------|--------|-------------|-------------|
 | **modern-python** | — | Modern Python tooling guide (uv, ruff, ty) | Creating Python projects, writing scripts, migrating from pip/poetry/mypy/black |
+| **tdd** | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/tdd) | Red-green-refactor workflow for building features or fixing bugs one vertical slice at a time | When you want test-first implementation with behavior-focused tests |
 | **obsidian-markdown** | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Obsidian Flavored Markdown reference (wikilinks, embeds, callouts, properties) | Working with .md files in Obsidian vaults |
 
 **Quick usage:**
 ```bash
+# In Pi
+/skill:tdd
+/skill:baseline-ui
+
 # In Claude Code
 /skill rams src/Button.tsx
 /skill baseline-ui
 /skill modern-python
+/skill tdd
 
 # In Amp
 @rams src/Button.tsx
 @baseline-ui
 @modern-python
+@tdd
 ```
 
 ### Starship (`starship.toml`)
