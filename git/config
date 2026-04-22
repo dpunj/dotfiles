@@ -4,6 +4,7 @@
 
 [core]
 	editor = "zed --wait"
+	pager = "delta"
 
 [credential "https://github.com"]
 	helper = 
@@ -26,6 +27,13 @@
 
 [branch]
 	sort = -committerdate
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	side-by-side = true
+	line-numbers = true
 
 [rerere]
 	enabled = true
