@@ -125,6 +125,10 @@ function safe_link --argument-names src dest
     end
 end
 
+# ~/.config/git/ targets
+mkdir -p ~/.config/git
+safe_link ~/dotfiles/git/config ~/.config/git/config
+
 # ~/.config/ targets
 safe_link ~/dotfiles/fish ~/.config/fish
 safe_link ~/dotfiles/ghostty ~/.config/ghostty
@@ -185,17 +189,7 @@ else
 end
 
 # -----------------------------------------------------------
-# 5. Git config
-# -----------------------------------------------------------
-echo ""
-echo "═══ Git config ═══"
-
-git config --global user.email "dvx2492@gmail.com"
-git config --global init.defaultBranch main
-log_ok "git user.email + defaultBranch set"
-
-# -----------------------------------------------------------
-# 6. Clone repos into ~/code/
+# 5. Clone repos into ~/code/
 # -----------------------------------------------------------
 echo ""
 echo "═══ Repos ═══"
