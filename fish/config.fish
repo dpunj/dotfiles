@@ -33,5 +33,3 @@ if test -d "$HOME/.lmstudio/bin"
 end
 
 
-# opencode
-fish_add_path /Users/dpunj/.opencode/bin
