@@ -1,12 +1,13 @@
 {
-  "lastChangelogVersion": "0.61.1",
+  "lastChangelogVersion": "0.68.0",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-6",
-  "theme": "ocean-breeze",
+  "defaultModel": "claude-opus-4-7",
+  "theme": "catppuccin-mocha",
   "packages": [
     "npm:@ifi/oh-pi-themes",
     "npm:pi-interactive-shell",
-    "npm:@zenobius/pi-worktrees"
+    "npm:@zenobius/pi-worktrees",
+    "npm:pi-subagents"
   ],
   "defaultThinkingLevel": "high"
 }
