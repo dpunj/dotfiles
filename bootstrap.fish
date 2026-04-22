@@ -36,7 +36,7 @@ else
 end
 
 set -l formulae \
-    fish fzf zoxide starship \
+    fish fzf zoxide starship delta \
     gh git fd ripgrep ast-grep shellcheck shfmt actionlint zizmor \
     helix fnm jq htop tokei tree \
     libpq redis flyctl ollama
