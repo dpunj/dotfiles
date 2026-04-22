@@ -1,0 +1,36 @@
+command_timeout = 2000
+
+format = "$directory$git_branch$git_status$nodejs$bun$line_break$character"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+format = " [$symbol$branch]($style)"
+style = "bright-black"
+symbol = " "
+
+[git_status]
+format = "[$all_status$ahead_behind]($style)"
+style = "bright-black"
+
+[nodejs]
+format = " [$symbol$version]($style)"
+style = "green"
+symbol = " "
+detect_extensions = []
+detect_files = ["package.json", ".node-version", ".nvmrc", ".tool-versions"]
+detect_folders = ["node_modules"]
+
+[bun]
+format = " [$symbol$version]($style)"
+style = "yellow"
+symbol = "🥟 "
+
+[package]
+disabled = true
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
