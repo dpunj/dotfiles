@@ -1,0 +1,70 @@
+{
+  "enabled": true,
+  "cloakCharacter": "*",
+  "cloakLength": null,
+  "tryAllPatterns": false,
+  "patterns": [
+    {
+      "filePattern": "**/*.vars*",
+      "cloakPattern": "(=).+",
+      "replace": "$1"
+    },
+    {
+      "filePattern": "**/*.env*",
+      "cloakPattern": [
+        {
+          "pattern": "^((?:DATABASE_URL|POSTGRES_URL|POSTGRES_PRISMA_URL|POSTGRES_URL_NON_POOLING)=)([^:/?#]+://)(?:[^:@/]+(?::[^@/]*)?@)?([^/?#\n]+)(/[^?#\n]*)?(?:[?#].*)?$",
+          "replace": "$1$2***:***@$3$4"
+        },
+        {
+          "pattern": "^((?:NODE_ENV|APP_ENV|RAILS_ENV|ENVIRONMENT|VERCEL_ENV|NEON_BRANCH_ID|NEON_BRANCH_NAME|NEON_PROJECT_ID|POSTGRES_HOST|PGHOST|POSTGRES_DATABASE|PGDATABASE)=.+)$",
+          "replace": "$1"
+        },
+        {
+          "pattern": "(=).+",
+          "replace": "$1"
+        }
+      ]
+    },
+    {
+      "filePattern": "**/*.opencode.json",
+      "cloakPattern": "(\\\"apiKey\\\"\\s*:\\s*\\\")[^\\\"]+",
+      "replace": "$1"
+    },
+    {
+      "filePattern": "**/opencode.json",
+      "cloakPattern": "(\\\"apiKey\\\"\\s*:\\s*\\\")[^\\\"]+",
+      "replace": "$1"
+    },
+    {
+      "filePattern": "**/config.toml",
+      "cloakPattern": "(token\\s*=\\s*).+",
+      "replace": "$1"
+    },
+    {
+      "filePattern": [
+        "**/*.json",
+        "**/*.jsonc"
+      ],
+      "cloakPattern": [
+        {
+          "pattern": "(\\\"(?:CLOUDFLARE_ACCESS_TEAM_DOMAIN|CLOUDFLARE_ACCESS_AUD)\\\"\\s*:\\s*\\\")[^\\\"]+",
+          "replace": "$1"
+        }
+      ]
+    },
+    {
+      "filePattern": [
+        "~/.pi/agent/auth.json",
+        "**/.pi/agent/auth.json",
+        "**/auth.json"
+      ],
+      "cloakPattern": [
+        {
+          "pattern": "(\\\"(?:token|access|refresh|accessToken|refreshToken|apiKey|secret|password|clientSecret|idToken|sessionToken|authorization)\\\"\\s*:\\s*\\\")[^\\\"]+",
+          "replace": "$1"
+        }
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.69.0",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
-  "theme": "catppuccin-mocha",
+  "theme": "twilight-ocean",
   "packages": [
     "npm:@ifi/oh-pi-themes",
     "npm:pi-interactive-shell",
