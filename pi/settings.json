@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.68.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-7",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
   "theme": "catppuccin-mocha",
   "packages": [
     "npm:@ifi/oh-pi-themes",
@@ -9,5 +9,10 @@
     "npm:@zenobius/pi-worktrees",
     "npm:pi-subagents"
   ],
-  "defaultThinkingLevel": "high"
+  "defaultThinkingLevel": "high",
+  "enabledModels": [
+    "openai-codex/gpt-5.4",
+    "openai-codex/gpt-5.5",
+    "anthropic/claude-opus-4-7"
+  ]
 }

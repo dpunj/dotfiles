@@ -149,7 +149,11 @@ safe_link ~/dotfiles/claude/mcp.json ~/.mcp.json
 
 # Pi agent
 mkdir -p ~/.pi/agent
+safe_link ~/dotfiles/pi/AGENTS.md ~/.pi/agent/AGENTS.md
+safe_link ~/dotfiles/pi/settings.json ~/.pi/agent/settings.json
+safe_link ~/dotfiles/pi/models.json ~/.pi/agent/models.json
 safe_link ~/dotfiles/pi/extensions ~/.pi/agent/extensions
+safe_link ~/dotfiles/pi/prompts ~/.pi/agent/prompts
 safe_link ~/dotfiles/pi/themes ~/.pi/agent/themes
 
 # Qwen Code
@@ -170,7 +174,7 @@ safe_link ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
 # Skills → Claude Code + Amp + Pi (Hermes picks up ~/dotfiles/skills/ via external_dirs)
 mkdir -p ~/.claude/skills
 mkdir -p ~/.pi/agent/skills
-for skill in rams baseline-ui web-interface-guidelines
+for skill in rams baseline-ui web-interface-guidelines tdd
     safe_link ~/dotfiles/skills/$skill ~/.claude/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/dotfiles/amp/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/.pi/agent/skills/$skill
