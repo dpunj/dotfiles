@@ -45,7 +45,8 @@ dotfiles/
 │   │   ├── commit.md    fix.md    review.md
 │   │   ├── explain.md   test.md
 │   └── themes/
-│       └── ocean-breeze.json     # Custom ocean theme (→ ~/.pi/agent/themes/themes/)
+│       ├── twilight-ocean.json   # Active blue ocean/twilight theme
+│       └── ocean-breeze.json     # Earlier custom ocean theme
 ├── claude/               (files symlinked individually)
 │   ├── mcp.json          → ~/.mcp.json
 │   ├── settings.json     → ~/.claude/settings.json
@@ -122,8 +123,7 @@ ln -s ~/dotfiles/pi/settings.json ~/.pi/agent/settings.json
 ln -s ~/dotfiles/pi/cloak.json ~/.pi/agent/cloak.json
 ln -s ~/dotfiles/pi/extensions ~/.pi/agent/extensions
 ln -s ~/dotfiles/pi/prompts ~/.pi/agent/prompts
-# themes/ was already symlinked at ~/.pi/agent/themes/themes/
-# (pi discovers theme files in nested directories)
+ln -s ~/dotfiles/pi/themes ~/.pi/agent/themes
 
 # Claude Code reads ~/.claude/CLAUDE.md (symlink to same file)
 ln -s ~/dotfiles/AGENTS.md ~/.claude/CLAUDE.md
@@ -204,7 +204,7 @@ ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-mark
 ### Pi (`pi/`)
 
 - Model: Claude Opus 4.6 via Anthropic, thinking level high
-- Theme: `ocean-breeze` (custom dark ocean palette)
+- Theme: `twilight-ocean` (custom blue ocean/twilight palette)
 - Packages: `@ifi/oh-pi-themes` (community themes), `pi-interactive-shell` (agent overlay)
 - Extensions:
   - `custom-footer.ts` — single-line status bar with color-coded cost/context% (muted → warning → error)
