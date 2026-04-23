@@ -31,12 +31,15 @@ dotfiles/
 ├── pi/               → ~/.pi/agent/ (files + dirs symlinked individually)
 │   ├── AGENTS.md         → ~/.pi/agent/AGENTS.md
 │   ├── settings.json     → ~/.pi/agent/settings.json
+│   ├── cloak.json        → ~/.pi/agent/cloak.json
 │   ├── extensions/       → ~/.pi/agent/extensions/
 │   │   ├── auto-session-name.ts  # Auto-names sessions from first message
 │   │   ├── compact-header.ts     # Compact chat header
 │   │   ├── custom-footer.ts      # Enhanced status bar (tokens, cost, context%, timer)
-│   │   ├── git-guard.ts          # Git safety guardrails
+│   │   ├── git-guard.ts          # Git completion notifications + dirty-repo warning
+│   │   ├── git-interceptor.ts    # Git editor-hang prevention + --no-verify blocking
 │   │   ├── safe-guard.ts         # File safety guardrails
+│   │   ├── pi-cloak/             # Redacts configured secrets from read tool output
 │   │   └── music/                # Music player extension
 │   ├── prompts/          → ~/.pi/agent/prompts/
 │   │   ├── commit.md    fix.md    review.md
@@ -59,7 +62,8 @@ dotfiles/
 │   ├── baseline-ui/                 # Anti-AI-slop UI constraints
 │   ├── web-interface-guidelines/    # Vercel's 80+ web UI rules
 │   ├── modern-python/               # Python tooling guide (uv, ruff, ty)
-│   └── tdd/                         # Test-driven development workflow
+│   ├── tdd/                         # Test-driven development workflow
+│   └── tmux/                        # Remote-control interactive CLI sessions
 │
 │  # Shared across agents
 └── AGENTS.md         → ~/.config/AGENTS.md + ~/.claude/CLAUDE.md
@@ -115,6 +119,7 @@ ln -s ~/dotfiles/AGENTS.md ~/.config/AGENTS.md
 # Pi (symlink individual files + directories into ~/.pi/agent/)
 ln -s ~/dotfiles/pi/AGENTS.md ~/.pi/agent/AGENTS.md
 ln -s ~/dotfiles/pi/settings.json ~/.pi/agent/settings.json
+ln -s ~/dotfiles/pi/cloak.json ~/.pi/agent/cloak.json
 ln -s ~/dotfiles/pi/extensions ~/.pi/agent/extensions
 ln -s ~/dotfiles/pi/prompts ~/.pi/agent/prompts
 # themes/ was already symlinked at ~/.pi/agent/themes/themes/
@@ -147,14 +152,17 @@ ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.pi/agent/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/tdd ~/.pi/agent/skills/tdd
+ln -s ~/dotfiles/skills/tmux ~/.pi/agent/skills/tmux
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
+ln -s ~/dotfiles/skills/tmux ~/.claude/skills/tmux
 ln -s ~/dotfiles/skills/rams ~/dotfiles/amp/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/tdd ~/dotfiles/amp/skills/tdd
+ln -s ~/dotfiles/skills/tmux ~/dotfiles/amp/skills/tmux
 
 # Obsidian skill (lives in amp/skills/ directly, symlink to ~/.config/amp/skills/)
 ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-markdown
@@ -202,10 +210,11 @@ ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-mark
   - `custom-footer.ts` — single-line status bar with color-coded cost/context% (muted → warning → error)
   - `compact-header.ts` — minimal chat header
   - `auto-session-name.ts` — names sessions from first message
-  - `git-guard.ts` / `safe-guard.ts` — safety guardrails for git and file ops
+  - `git-guard.ts` / `git-interceptor.ts` / `safe-guard.ts` — safety guardrails for git, shell, and file ops
+  - `pi-cloak/` + `cloak.json` — redacts configured secrets from `read` tool output
   - `music/` — music player
 - Prompt templates: `commit`, `explain`, `fix`, `review`, `test`
-- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, tdd)
+- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, tdd, tmux)
 
 ### Claude Code (`claude/`)
 
@@ -238,7 +247,7 @@ ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-mark
 
 ### [Skills](./skills/) (`skills/`)
 
-Reusable capabilities for Claude Code (`/skill`) and Amp. All skills live in `~/dotfiles/skills/` and are symlinked to agent-specific directories.
+Reusable capabilities for Pi, Claude Code (`/skill`), and Amp. All skills live in `~/dotfiles/skills/` and are symlinked to agent-specific directories.
 
 #### Design & UI Review
 
@@ -259,6 +268,7 @@ These three complement each other:
 |-------|--------|-------------|-------------|
 | **modern-python** | — | Modern Python tooling guide (uv, ruff, ty) | Creating Python projects, writing scripts, migrating from pip/poetry/mypy/black |
 | **tdd** | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/tdd) | Red-green-refactor workflow for building features or fixing bugs one vertical slice at a time | When you want test-first implementation with behavior-focused tests |
+| **tmux** | [mitsuhiko/agent-stuff](https://github.com/mitsuhiko/agent-stuff) | Private-socket tmux workflow for driving interactive CLIs and long-running processes | When a dev server, REPL, debugger, or TTY program needs controlled interactive monitoring |
 | **obsidian-markdown** | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Obsidian Flavored Markdown reference (wikilinks, embeds, callouts, properties) | Working with .md files in Obsidian vaults |
 
 **Quick usage:**
@@ -266,18 +276,21 @@ These three complement each other:
 # In Pi
 /skill:tdd
 /skill:baseline-ui
+/skill:tmux
 
 # In Claude Code
 /skill rams src/Button.tsx
 /skill baseline-ui
 /skill modern-python
 /skill tdd
+/skill tmux
 
 # In Amp
 @rams src/Button.tsx
 @baseline-ui
 @modern-python
 @tdd
+@tmux
 ```
 
 ### Starship (`starship.toml`)
