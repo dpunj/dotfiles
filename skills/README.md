@@ -7,6 +7,8 @@ Reusable capabilities for AI coding agents. Each skill is a self-contained direc
 | Skill | Category | Purpose |
 |-------|----------|---------|
 | [baseline-ui](./baseline-ui/) | Design | Anti-AI-slop UI constraints for Tailwind/React |
+| [grill-me](./grill-me/) | Planning | Relentless interview loop for stress-testing plans and uncovering hidden requirements |
+| [improve-codebase-architecture](./improve-codebase-architecture/) | Architecture | Find deepening opportunities, refactoring seams, and testability improvements |
 | [modern-python](./modern-python/) | Development | Modern Python tooling (uv, ruff, ty) |
 | [rams](./rams/) | Design | WCAG 2.1 accessibility + visual design review |
 | [tdd](./tdd/) | Development | Test-driven development with a red-green-refactor loop |
@@ -19,6 +21,8 @@ Skills are automatically available when symlinked into each agent's skills direc
 ```bash
 # Pi (~/.pi/agent/skills/)
 ln -s ~/dotfiles/skills/baseline-ui ~/.pi/agent/skills/baseline-ui
+ln -s ~/dotfiles/skills/grill-me ~/.pi/agent/skills/grill-me
+ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.pi/agent/skills/improve-codebase-architecture
 ln -s ~/dotfiles/skills/modern-python ~/.pi/agent/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.pi/agent/skills/tdd
@@ -26,6 +30,8 @@ ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interfac
 
 # Claude Code (~/.claude/skills/)
 ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
+ln -s ~/dotfiles/skills/grill-me ~/.claude/skills/grill-me
+ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.claude/skills/improve-codebase-architecture
 ln -s ~/dotfiles/skills/modern-python ~/.claude/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
@@ -33,6 +39,8 @@ ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-
 
 # Amp (~/.config/amp/skills/)
 ln -s ~/dotfiles/skills/baseline-ui ~/.config/amp/skills/baseline-ui
+ln -s ~/dotfiles/skills/grill-me ~/.config/amp/skills/grill-me
+ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.config/amp/skills/improve-codebase-architecture
 ln -s ~/dotfiles/skills/modern-python ~/.config/amp/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.config/amp/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.config/amp/skills/tdd
@@ -51,6 +59,8 @@ Examples:
 ```bash
 /skill:tdd
 /skill:tdd implement order cancellation flow
+/skill:grill-me stress-test this merchant onboarding plan
+/skill:improve-codebase-architecture find deepening opportunities in src/tools
 /skill:baseline-ui
 ```
 
@@ -63,6 +73,8 @@ Examples:
 Examples:
 ```bash
 /skill baseline-ui              # Apply constraints to current conversation
+/skill grill-me                 # Stress-test a plan through structured questions
+/skill improve-codebase-architecture  # Find architecture deepening opportunities
 /skill rams src/Button.tsx      # Review specific file
 /skill modern-python            # Get Python tooling guidance
 /skill tdd                      # Use red-green-refactor for the task
@@ -77,6 +89,8 @@ Examples:
 Examples:
 ```bash
 @baseline-ui
+@grill-me stress-test this architecture
+@improve-codebase-architecture src/
 @rams src/Button.tsx
 @modern-python
 @tdd
@@ -95,6 +109,27 @@ Key constraints:
 - No `h-screen`, use `h-dvh`
 - Animate only `transform`/`opacity`
 - `text-balance` for headings, `text-pretty` for body
+
+### grill-me
+
+**Use before building or committing to a plan.** The agent interviews you one decision at a time, explores the codebase when it can answer its own questions, and provides its recommended answer for each unresolved branch.
+
+Good for:
+- Stress-testing feature plans and architecture proposals
+- Discovering hidden requirements before implementation
+- Turning vague ideas into executable scope
+- Rubber-ducking tradeoffs with an opinionated partner
+
+### improve-codebase-architecture
+
+**Use when architecture feels too shallow, coupled, or hard to test.** The agent reads context docs and ADRs, explores the codebase, and surfaces numbered deepening opportunities before proposing interfaces.
+
+Good for:
+- Finding shallow pass-through modules
+- Consolidating tightly coupled modules behind deeper interfaces
+- Improving locality and leverage
+- Making code easier to test through real seams
+- Avoiding architecture drift by respecting existing ADRs
 
 ### modern-python
 
@@ -191,6 +226,8 @@ Skills can be used together for comprehensive workflows:
 | Skill | Upstream | License |
 |-------|----------|---------|
 | baseline-ui | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | MIT |
+| grill-me | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/grill-me) | MIT |
+| improve-codebase-architecture | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/improve-codebase-architecture) | MIT |
 | modern-python | Based on [trailofbits/cookiecutter-python](https://github.com/trailofbits/cookiecutter-python) | Apache-2.0 |
 | rams | [rams.ai](https://rams.ai) | MIT |
 | tdd | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/tdd) | MIT |
@@ -206,6 +243,8 @@ Why:
 - lets us version upstream skill updates in git
 
 Current vendored skills:
+- `grill-me` → adapted from `mattpocock/skills/tree/main/grill-me`
+- `improve-codebase-architecture` → synced from `mattpocock/skills/tree/main/improve-codebase-architecture` with supporting domain-model references vendored locally
 - `tdd` → synced from `mattpocock/skills/tree/main/tdd`
 
 When updating a vendored skill:
