@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.69.0",
+  "lastChangelogVersion": "0.70.2",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "theme": "twilight-ocean",
@@ -7,12 +7,14 @@
     "npm:@ifi/oh-pi-themes",
     "npm:pi-interactive-shell",
     "npm:@zenobius/pi-worktrees",
-    "npm:pi-subagents"
+    "npm:pi-subagents",
+    "npm:pi-mcp-adapter"
   ],
   "defaultThinkingLevel": "high",
   "enabledModels": [
     "openai-codex/gpt-5.4",
     "openai-codex/gpt-5.5",
     "anthropic/claude-opus-4-7"
-  ]
+  ],
+  "hideThinkingBlock": false
 }
