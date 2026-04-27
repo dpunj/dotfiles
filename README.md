@@ -205,7 +205,8 @@ ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-mark
 
 - Model: Claude Opus 4.6 via Anthropic, thinking level high
 - Theme: `twilight-ocean` (custom blue ocean/twilight palette)
-- Packages: `@ifi/oh-pi-themes` (community themes), `pi-interactive-shell` (agent overlay)
+- Packages: `@ifi/oh-pi-themes` (community themes), `pi-interactive-shell` (agent overlay), `pi-mcp-adapter` (lazy MCP bridge)
+- MCP servers: shared `mcp/mcp.json` → `~/.config/mcp/mcp.json` includes Linear via `mcp-remote`
 - Extensions:
   - `custom-footer.ts` — single-line status bar with color-coded cost/context% (muted → warning → error)
   - `compact-header.ts` — minimal chat header

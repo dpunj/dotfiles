@@ -133,6 +133,7 @@ safe_link ~/dotfiles/git/config ~/.config/git/config
 safe_link ~/dotfiles/fish ~/.config/fish
 safe_link ~/dotfiles/ghostty ~/.config/ghostty
 safe_link ~/dotfiles/amp ~/.config/amp
+safe_link ~/dotfiles/mcp/mcp.json ~/.config/mcp/mcp.json
 safe_link ~/dotfiles/starship.toml ~/.config/starship.toml
 safe_link ~/dotfiles/AGENTS.md ~/.config/AGENTS.md
 
