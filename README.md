@@ -57,9 +57,7 @@ dotfiles/
 │   ├── config.toml       # Kimi Code settings
 │   └── mcp.json          # MCP servers (context7)
 ├── codex/
-│   └── skills/           # Symlinks → ~/.codex/skills/
-│       ├── baseline-ui/  # Shared dotfiles skill
-│       └── obsidian-*    # Vault-owned Obsidian skills from ~/notes/.amp/skills/
+│   └── skills/           # Shared dotfiles skill symlinks → ~/.codex/skills/
 │
 │  # Skills (source of truth, symlinked to agent skill directories)
 ├── skills/
@@ -178,11 +176,12 @@ ln -s ~/dotfiles/skills/tmux ~/dotfiles/amp/skills/tmux
 
 # Obsidian skills (source of truth: ~/notes/.amp/skills/)
 ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-markdown
-ln -s ~/dotfiles/codex/skills/defuddle ~/.codex/skills/defuddle
-ln -s ~/dotfiles/codex/skills/obsidian-markdown ~/.codex/skills/obsidian-markdown
-ln -s ~/dotfiles/codex/skills/obsidian-bases ~/.codex/skills/obsidian-bases
-ln -s ~/dotfiles/codex/skills/obsidian-cli ~/.codex/skills/obsidian-cli
-ln -s ~/dotfiles/codex/skills/json-canvas ~/.codex/skills/json-canvas
+mkdir -p ~/notes/.agents/skills
+ln -s ../../.amp/skills/defuddle ~/notes/.agents/skills/defuddle
+ln -s ../../.amp/skills/obsidian-markdown ~/notes/.agents/skills/obsidian-markdown
+ln -s ../../.amp/skills/obsidian-bases ~/notes/.agents/skills/obsidian-bases
+ln -s ../../.amp/skills/obsidian-cli ~/notes/.agents/skills/obsidian-cli
+ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
 ```
 
 ## What's Configured
@@ -243,10 +242,10 @@ ln -s ~/dotfiles/codex/skills/json-canvas ~/.codex/skills/json-canvas
 
 ### Codex (`codex/`)
 
-- Skills in `codex/skills/` are symlink targets for `~/.codex/skills/`
+- Shared skills in `codex/skills/` are symlink targets for `~/.codex/skills/`
 - Shared skills point back to `~/dotfiles/skills/`
-- Obsidian skills point to `~/notes/.amp/skills/`, so Amp, Claude, and Codex use the same vault-owned skill definitions
-- Restart Codex after adding or changing skill symlinks so the native skill registry refreshes
+- Notes-only Obsidian skills live in `~/notes/.amp/skills/` and are exposed to Codex through `~/notes/.agents/skills/`
+- Restart Codex if skill changes do not appear automatically
 
 ### Qwen Code (`qwen/`)
 
