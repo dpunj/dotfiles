@@ -56,6 +56,10 @@ dotfiles/
 ├── kimi/             → ~/.kimi/
 │   ├── config.toml       # Kimi Code settings
 │   └── mcp.json          # MCP servers (context7)
+├── codex/
+│   └── skills/           # Symlinks → ~/.codex/skills/
+│       ├── baseline-ui/  # Shared dotfiles skill
+│       └── obsidian-*    # Vault-owned Obsidian skills from ~/notes/.amp/skills/
 │
 │  # Skills (source of truth, symlinked to agent skill directories)
 ├── skills/
@@ -147,7 +151,7 @@ mkdir -p ~/.hermes
 ln -s ~/dotfiles/hermes/config.yaml ~/.hermes/config.yaml
 ln -s ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
 
-# Shared skills (symlink to Pi, Claude Code + Amp)
+# Shared skills (symlink to Pi, Claude Code, Codex + Amp)
 ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.pi/agent/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interface-guidelines
@@ -158,14 +162,27 @@ ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
 ln -s ~/dotfiles/skills/tmux ~/.claude/skills/tmux
+ln -s ~/dotfiles/codex/skills/baseline-ui ~/.codex/skills/baseline-ui
+ln -s ~/dotfiles/codex/skills/grill-me ~/.codex/skills/grill-me
+ln -s ~/dotfiles/codex/skills/improve-codebase-architecture ~/.codex/skills/improve-codebase-architecture
+ln -s ~/dotfiles/codex/skills/modern-python ~/.codex/skills/modern-python
+ln -s ~/dotfiles/codex/skills/rams ~/.codex/skills/rams
+ln -s ~/dotfiles/codex/skills/tdd ~/.codex/skills/tdd
+ln -s ~/dotfiles/codex/skills/tmux ~/.codex/skills/tmux
+ln -s ~/dotfiles/codex/skills/web-interface-guidelines ~/.codex/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/rams ~/dotfiles/amp/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/tdd ~/dotfiles/amp/skills/tdd
 ln -s ~/dotfiles/skills/tmux ~/dotfiles/amp/skills/tmux
 
-# Obsidian skill (lives in amp/skills/ directly, symlink to ~/.config/amp/skills/)
+# Obsidian skills (source of truth: ~/notes/.amp/skills/)
 ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-markdown
+ln -s ~/dotfiles/codex/skills/defuddle ~/.codex/skills/defuddle
+ln -s ~/dotfiles/codex/skills/obsidian-markdown ~/.codex/skills/obsidian-markdown
+ln -s ~/dotfiles/codex/skills/obsidian-bases ~/.codex/skills/obsidian-bases
+ln -s ~/dotfiles/codex/skills/obsidian-cli ~/.codex/skills/obsidian-cli
+ln -s ~/dotfiles/codex/skills/json-canvas ~/.codex/skills/json-canvas
 ```
 
 ## What's Configured
@@ -223,6 +240,13 @@ ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-mark
 - Context bar goes dim `░` → solid `█` as context fills up
 - Global MCP servers (`mcp.json` → `~/.mcp.json`): context7
 - Add project-specific servers to `.mcp.json` in the project root
+
+### Codex (`codex/`)
+
+- Skills in `codex/skills/` are symlink targets for `~/.codex/skills/`
+- Shared skills point back to `~/dotfiles/skills/`
+- Obsidian skills point to `~/notes/.amp/skills/`, so Amp, Claude, and Codex use the same vault-owned skill definitions
+- Restart Codex after adding or changing skill symlinks so the native skill registry refreshes
 
 ### Qwen Code (`qwen/`)
 

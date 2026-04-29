@@ -37,6 +37,23 @@ ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
 
+# Codex (~/.codex/skills/)
+ln -s ~/dotfiles/codex/skills/baseline-ui ~/.codex/skills/baseline-ui
+ln -s ~/dotfiles/codex/skills/grill-me ~/.codex/skills/grill-me
+ln -s ~/dotfiles/codex/skills/improve-codebase-architecture ~/.codex/skills/improve-codebase-architecture
+ln -s ~/dotfiles/codex/skills/modern-python ~/.codex/skills/modern-python
+ln -s ~/dotfiles/codex/skills/rams ~/.codex/skills/rams
+ln -s ~/dotfiles/codex/skills/tdd ~/.codex/skills/tdd
+ln -s ~/dotfiles/codex/skills/tmux ~/.codex/skills/tmux
+ln -s ~/dotfiles/codex/skills/web-interface-guidelines ~/.codex/skills/web-interface-guidelines
+
+# Codex Obsidian skills (source of truth: ~/notes/.amp/skills/)
+ln -s ~/dotfiles/codex/skills/defuddle ~/.codex/skills/defuddle
+ln -s ~/dotfiles/codex/skills/obsidian-markdown ~/.codex/skills/obsidian-markdown
+ln -s ~/dotfiles/codex/skills/obsidian-bases ~/.codex/skills/obsidian-bases
+ln -s ~/dotfiles/codex/skills/obsidian-cli ~/.codex/skills/obsidian-cli
+ln -s ~/dotfiles/codex/skills/json-canvas ~/.codex/skills/json-canvas
+
 # Amp (~/.config/amp/skills/)
 ln -s ~/dotfiles/skills/baseline-ui ~/.config/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/grill-me ~/.config/amp/skills/grill-me
@@ -95,6 +112,14 @@ Examples:
 @modern-python
 @tdd
 ```
+
+### Codex
+
+Codex discovers skills from `~/.codex/skills/`. Link through
+`~/dotfiles/codex/skills/` so shared dotfiles skills and vault-owned
+Obsidian skills have one stable install surface.
+
+Restart Codex after adding or changing symlinks.
 
 ## When to Use Each Skill
 
@@ -246,6 +271,16 @@ Current vendored skills:
 - `grill-me` → adapted from `mattpocock/skills/tree/main/grill-me`
 - `improve-codebase-architecture` → synced from `mattpocock/skills/tree/main/improve-codebase-architecture` with supporting domain-model references vendored locally
 - `tdd` → synced from `mattpocock/skills/tree/main/tdd`
+
+Vault-owned skills are intentionally not vendored here:
+- `defuddle`
+- `obsidian-markdown`
+- `obsidian-bases`
+- `obsidian-cli`
+- `json-canvas`
+
+They live in `~/notes/.amp/skills/` and are exposed to Codex through
+`~/dotfiles/codex/skills/`.
 
 When updating a vendored skill:
 1. Pull the latest upstream files into `skills/<name>/`
