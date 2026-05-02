@@ -1,0 +1,79 @@
+#!/usr/bin/env -S fish --no-config
+
+set -l GREEN (set_color green)
+set -l YELLOW (set_color yellow)
+set -l RED (set_color red)
+set -l RESET (set_color normal)
+
+function ok --argument-names message
+    echo "$GREEN✓$RESET $message"
+end
+
+function warn --argument-names message
+    echo "$YELLOW!$RESET $message"
+end
+
+function bad --argument-names message
+    echo "$RED✗$RESET $message"
+    set -g agentbox_failed 1
+end
+
+function need_command --argument-names name
+    if command -q "$name"
+        ok "$name installed"
+    else
+        bad "$name missing"
+    end
+end
+
+set -g agentbox_failed 0
+
+echo "Agentbox doctor"
+echo ""
+
+for tool in git gh fish tmux tailscale bun node
+    need_command $tool
+end
+
+echo ""
+
+if test -d "$HOME/code/versa-ts/.git"
+    ok "~/code/versa-ts exists"
+else
+    bad "~/code/versa-ts missing"
+end
+
+if test -d "$HOME/code/worktrees"
+    ok "~/code/worktrees exists"
+else
+    warn "~/code/worktrees missing; agent-worktree will create it"
+end
+
+if command -q gh
+    if gh auth status >/dev/null 2>&1
+        ok "GitHub CLI authenticated"
+    else
+        bad "GitHub CLI is not authenticated; run gh auth login"
+    end
+end
+
+if command -q tailscale
+    set -l tailscale_status_output (tailscale status 2>&1)
+    set -l tailscale_status_code $status
+
+    if test "$tailscale_status_code" -eq 0
+        and not string match --quiet --ignore-case "*failed*" -- "$tailscale_status_output"
+        ok "Tailscale is connected"
+    else
+        bad "Tailscale is not connected"
+    end
+end
+
+echo ""
+
+if test "$agentbox_failed" -eq 0
+    ok "Agentbox looks ready"
+else
+    bad "Agentbox needs attention"
+    exit 1
+end
