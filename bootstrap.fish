@@ -38,7 +38,7 @@ end
 set -l formulae \
     fish fzf zoxide starship delta \
     gh git fd ripgrep ast-grep shellcheck shfmt actionlint zizmor \
-    helix fnm jq htop tokei tree \
+    helix fnm jq htop tokei tree tailscale tmux \
     libpq redis flyctl ollama
 
 for pkg in $formulae
@@ -129,6 +129,10 @@ end
 mkdir -p ~/.config/git
 safe_link ~/dotfiles/git/config ~/.config/git/config
 
+# Agentbox helper scripts
+safe_link ~/dotfiles/bin/agentbox-doctor ~/.local/bin/agentbox-doctor
+safe_link ~/dotfiles/bin/agent-worktree ~/.local/bin/agent-worktree
+
 # ~/.config/ targets
 safe_link ~/dotfiles/fish ~/.config/fish
 safe_link ~/dotfiles/ghostty ~/.config/ghostty
@@ -176,7 +180,11 @@ safe_link ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
 # Skills → Claude Code + Amp + Pi (Hermes picks up ~/dotfiles/skills/ via external_dirs)
 mkdir -p ~/.claude/skills
 mkdir -p ~/.pi/agent/skills
-for skill in rams baseline-ui web-interface-guidelines tdd tmux grill-me improve-codebase-architecture
+set -l shared_skills \
+    rams baseline-ui web-interface-guidelines tdd tmux grill-me \
+    improve-codebase-architecture
+
+for skill in $shared_skills
     safe_link ~/dotfiles/skills/$skill ~/.claude/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/dotfiles/amp/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/.pi/agent/skills/$skill

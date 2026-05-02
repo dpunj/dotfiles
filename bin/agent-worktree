@@ -1,0 +1,71 @@
+#!/usr/bin/env -S fish --no-config
+
+set -l GREEN (set_color green)
+set -l YELLOW (set_color yellow)
+set -l RED (set_color red)
+set -l RESET (set_color normal)
+
+function fail --argument-names message
+    echo "$RED✗$RESET $message" >&2
+    exit 1
+end
+
+function usage
+    echo "Usage: agent-worktree <task-name> [repo] [base-branch]"
+    echo ""
+    echo "Examples:"
+    echo "  agent-worktree fix-felipe-hours"
+    echo "  agent-worktree pr-282-cleanup versa-ts main"
+end
+
+if test (count $argv) -lt 1
+    usage
+    exit 2
+end
+
+set -l task_slug (
+    string lower -- $argv[1] |
+    string replace -ra '[^a-z0-9._-]+' '-' |
+    string trim --chars '-'
+)
+
+if test -z "$task_slug"
+    fail "Task name must contain at least one letter or number."
+end
+
+set -l repo (string trim -- (test (count $argv) -ge 2; and echo $argv[2]; or echo versa-ts))
+set -l base_branch (string trim -- (test (count $argv) -ge 3; and echo $argv[3]; or echo main))
+set -l code_root "$HOME/code"
+set -l repo_dir "$code_root/$repo"
+set -l worktree_root "$code_root/worktrees"
+set -l worktree_dir "$worktree_root/$repo-agent-$task_slug"
+set -l branch "agent/$task_slug"
+
+test -d "$repo_dir/.git" || fail "Missing repo clone at $repo_dir."
+command -q git || fail "git is not installed."
+
+mkdir -p "$worktree_root"
+
+if git -C "$repo_dir" rev-parse --verify --quiet "$branch" >/dev/null
+    fail "Branch already exists: $branch."
+end
+
+if test -e "$worktree_dir"
+    fail "Worktree path already exists: $worktree_dir."
+end
+
+echo "$YELLOW→$RESET Fetching origin for $repo..."
+git -C "$repo_dir" fetch origin || fail "Could not fetch origin in $repo_dir."
+
+set -l base_ref "origin/$base_branch"
+git -C "$repo_dir" rev-parse --verify --quiet "$base_ref" >/dev/null
+or fail "Base branch not found after fetch: $base_ref."
+
+echo "$YELLOW→$RESET Creating $worktree_dir from $base_ref..."
+git -C "$repo_dir" worktree add -b "$branch" "$worktree_dir" "$base_ref"
+or fail "Could not create worktree."
+
+echo "$GREEN✓$RESET Created $worktree_dir"
+echo "  Branch: $branch"
+echo "  Start:  cd $worktree_dir"
+echo "  Tmux:   tmux new -A -s $repo-$task_slug"

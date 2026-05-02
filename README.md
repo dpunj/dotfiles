@@ -19,6 +19,9 @@ dotfiles/
 │   ├── completions/      # Custom completions
 │   ├── conf.d/           # Auto-sourced config snippets
 │   └── functions/        # Custom functions
+├── bin/              → helper CLIs on PATH
+│   ├── agentbox-doctor   # Checks always-on agent devbox readiness
+│   └── agent-worktree    # Creates isolated repo worktrees for agents
 ├── ghostty/          → ~/.config/ghostty/
 │   └── config            # Terminal emulator settings
 ├── zed/settings.json → ~/.config/zed/settings.json
@@ -58,6 +61,8 @@ dotfiles/
 │   └── mcp.json          # MCP servers (context7)
 ├── codex/
 │   └── skills/           # Shared dotfiles skill symlinks → ~/.codex/skills/
+├── agentbox/
+│   └── README.md         # Tailscale SSH + shared versa-ts worktree setup
 │
 │  # Skills (source of truth, symlinked to agent skill directories)
 ├── skills/
@@ -111,6 +116,10 @@ ln -s ~/dotfiles/amp ~/.config/amp
 
 # Starship prompt
 ln -s ~/dotfiles/starship.toml ~/.config/starship.toml
+
+# Agentbox helper scripts
+ln -s ~/dotfiles/bin/agentbox-doctor ~/.local/bin/agentbox-doctor
+ln -s ~/dotfiles/bin/agent-worktree ~/.local/bin/agent-worktree
 
 # Zed (settings file only — Zed manages the rest of ~/.config/zed/)
 mkdir -p ~/.config/zed
@@ -193,6 +202,7 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
 - `~/.local/bin` — pip, pipx, cargo installs
 - `~/.amp/bin` — Amp CLI
 - `~/.opencode/bin` — OpenCode CLI
+- `~/dotfiles/bin` — local dotfiles helper CLIs
 - `~/.nvm/versions/node/v24.1.0/bin` — Node.js (via nvm)
 
 **Interactive tools:**
@@ -232,6 +242,14 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
   - `music/` — music player
 - Prompt templates: `commit`, `explain`, `fix`, `review`, `test`
 - Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, tdd, tmux)
+
+### Agentbox (`agentbox/`)
+
+- [Agentbox setup guide](./agentbox/README.md) for a Tailscale SSH devbox with
+  full access to `~/code/versa-ts`
+- `agentbox-doctor` checks required tools, GitHub auth, Tailscale, and repo paths
+- `agent-worktree <task-name>` creates isolated `~/code/worktrees/versa-ts-agent-*`
+  checkouts from `origin/main`
 
 ### Claude Code (`claude/`)
 
