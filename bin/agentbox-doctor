@@ -58,7 +58,11 @@ if command -q gh
 end
 
 if command -q tailscale
-    if tailscale status >/dev/null 2>&1
+    set -l tailscale_status_output (tailscale status 2>&1)
+    set -l tailscale_status_code $status
+
+    if test "$tailscale_status_code" -eq 0
+        and not string match --quiet --ignore-case "*failed*" -- "$tailscale_status_output"
         ok "Tailscale is connected"
     else
         bad "Tailscale is not connected"
