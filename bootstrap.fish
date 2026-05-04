@@ -182,6 +182,7 @@ for skill in rams baseline-ui web-interface-guidelines tdd tmux grill-me improve
     safe_link ~/dotfiles/skills/$skill ~/dotfiles/amp/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/.pi/agent/skills/$skill
 end
+safe_link ~/dotfiles/codex/pets/arctic-fractal-fox ~/.codex/pets/arctic-fractal-fox
 safe_link ~/dotfiles/codex/pets/cinderbyte ~/.codex/pets/cinderbyte
 
 # Global gitignore (ensures local/ is ignored everywhere)

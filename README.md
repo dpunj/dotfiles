@@ -169,6 +169,7 @@ ln -s ~/dotfiles/codex/skills/rams ~/.codex/skills/rams
 ln -s ~/dotfiles/codex/skills/tdd ~/.codex/skills/tdd
 ln -s ~/dotfiles/codex/skills/tmux ~/.codex/skills/tmux
 ln -s ~/dotfiles/codex/skills/web-interface-guidelines ~/.codex/skills/web-interface-guidelines
+ln -s ~/dotfiles/codex/pets/arctic-fractal-fox ~/.codex/pets/arctic-fractal-fox
 ln -s ~/dotfiles/codex/pets/cinderbyte ~/.codex/pets/cinderbyte
 ln -s ~/dotfiles/skills/rams ~/dotfiles/amp/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
