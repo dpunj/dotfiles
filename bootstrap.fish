@@ -184,6 +184,7 @@ for skill in rams baseline-ui web-interface-guidelines tdd tmux grill-me improve
 end
 safe_link ~/dotfiles/codex/pets/arctic-fractal-fox ~/.codex/pets/arctic-fractal-fox
 safe_link ~/dotfiles/codex/pets/cinderbyte ~/.codex/pets/cinderbyte
+safe_link ~/dotfiles/codex/pets/pomelo ~/.codex/pets/pomelo
 
 # Global gitignore (ensures local/ is ignored everywhere)
 mkdir -p ~/.config/git
