@@ -153,6 +153,7 @@ ln -s ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
 ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.pi/agent/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interface-guidelines
+ln -s ~/dotfiles/skills/modern-python ~/.pi/agent/skills/modern-python
 ln -s ~/dotfiles/skills/tdd ~/.pi/agent/skills/tdd
 ln -s ~/dotfiles/skills/tmux ~/.pi/agent/skills/tmux
 ln -s ~/dotfiles/skills/grill-me ~/.pi/agent/skills/grill-me
@@ -160,6 +161,7 @@ ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.pi/agent/skills/improve
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
+ln -s ~/dotfiles/skills/modern-python ~/.claude/skills/modern-python
 ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
 ln -s ~/dotfiles/skills/tmux ~/.claude/skills/tmux
 ln -s ~/dotfiles/skills/grill-me ~/.claude/skills/grill-me
@@ -175,6 +177,7 @@ ln -s ~/dotfiles/codex/skills/web-interface-guidelines ~/.codex/skills/web-inter
 ln -s ~/dotfiles/skills/rams ~/dotfiles/amp/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-interface-guidelines
+ln -s ~/dotfiles/skills/modern-python ~/dotfiles/amp/skills/modern-python
 ln -s ~/dotfiles/skills/tdd ~/dotfiles/amp/skills/tdd
 ln -s ~/dotfiles/skills/tmux ~/dotfiles/amp/skills/tmux
 ln -s ~/dotfiles/skills/grill-me ~/dotfiles/amp/skills/grill-me
@@ -237,7 +240,7 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
   - `pi-cloak/` + `cloak.json` — redacts configured secrets from `read` tool output
   - `music/` — music player
 - Prompt templates: `commit`, `explain`, `fix`, `review`, `test`
-- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, tdd, tmux, grill-me, improve-codebase-architecture)
+- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, modern-python, tdd, tmux, grill-me, improve-codebase-architecture)
 
 ### Claude Code (`claude/`)
 
