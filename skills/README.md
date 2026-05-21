@@ -256,11 +256,11 @@ Skills can be used together for comprehensive workflows:
 | Skill | Upstream | License |
 |-------|----------|---------|
 | baseline-ui | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | MIT |
-| grill-me | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/grill-me) | MIT |
-| improve-codebase-architecture | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/improve-codebase-architecture) | MIT |
+| grill-me | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) | MIT |
+| improve-codebase-architecture | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture) | MIT |
 | modern-python | Based on [trailofbits/cookiecutter-python](https://github.com/trailofbits/cookiecutter-python) | Apache-2.0 |
 | rams | [rams.ai](https://rams.ai) | MIT |
-| tdd | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/tdd) | MIT |
+| tdd | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd) | MIT |
 | web-interface-guidelines | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | MIT |
 
 ## Vendored Third-Party Skills
@@ -273,9 +273,9 @@ Why:
 - lets us version upstream skill updates in git
 
 Current vendored skills:
-- `grill-me` → adapted from `mattpocock/skills/tree/main/grill-me`
-- `improve-codebase-architecture` → synced from `mattpocock/skills/tree/main/improve-codebase-architecture` with supporting domain-model references vendored locally
-- `tdd` → synced from `mattpocock/skills/tree/main/tdd`
+- `grill-me` → adapted from `mattpocock/skills/tree/main/skills/productivity/grill-me`
+- `improve-codebase-architecture` → synced from `mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture` with supporting domain-model references vendored locally; latest HTML-report update traced through Dillon Mulroy's dotfiles commit `55dbc9172e47f0c30d3c2cc1dd31dbf25bdac4c5`
+- `tdd` → synced from `mattpocock/skills/tree/main/skills/engineering/tdd`
 
 Vault-owned skills are intentionally not vendored here:
 - `defuddle`
@@ -288,7 +288,8 @@ They live in `~/notes/.amp/skills/` and are exposed to Codex only inside the
 notes project through `~/notes/.agents/skills/`.
 
 When updating a vendored skill:
-1. Pull the latest upstream files into `skills/<name>/`
-2. Review the diff locally
-3. Keep attribution + license info in this README accurate
-4. Recreate or verify any symlinks in agent-specific skill directories if needed
+1. Prefer the upstream repo (`mattpocock/skills`) as the source of truth; use third-party dotfiles commits as pointers to interesting upstream changes
+2. Pull the latest upstream files into `skills/<name>/`
+3. Review the diff locally
+4. Keep attribution + license info in this README accurate
+5. Recreate or verify any symlinks in agent-specific skill directories if needed

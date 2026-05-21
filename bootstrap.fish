@@ -173,13 +173,15 @@ mkdir -p ~/.hermes
 safe_link ~/dotfiles/hermes/config.yaml ~/.hermes/config.yaml
 safe_link ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
 
-# Skills → Claude Code + Amp + Pi (Hermes picks up ~/dotfiles/skills/ via external_dirs)
+# Skills → Claude Code + Amp + Pi + Codex (Hermes picks up ~/dotfiles/skills/ via external_dirs)
 mkdir -p ~/.claude/skills
 mkdir -p ~/.pi/agent/skills
-for skill in rams baseline-ui web-interface-guidelines tdd tmux grill-me improve-codebase-architecture
+mkdir -p ~/.codex/skills
+for skill in rams baseline-ui web-interface-guidelines modern-python tdd tmux grill-me improve-codebase-architecture
     safe_link ~/dotfiles/skills/$skill ~/.claude/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/dotfiles/amp/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/.pi/agent/skills/$skill
+    safe_link ~/dotfiles/codex/skills/$skill ~/.codex/skills/$skill
 end
 
 # Global gitignore (ensures local/ is ignored everywhere)
