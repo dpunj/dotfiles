@@ -155,11 +155,15 @@ ln -s ~/dotfiles/skills/baseline-ui ~/.pi/agent/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/tdd ~/.pi/agent/skills/tdd
 ln -s ~/dotfiles/skills/tmux ~/.pi/agent/skills/tmux
+ln -s ~/dotfiles/skills/grill-me ~/.pi/agent/skills/grill-me
+ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.pi/agent/skills/improve-codebase-architecture
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
 ln -s ~/dotfiles/skills/tmux ~/.claude/skills/tmux
+ln -s ~/dotfiles/skills/grill-me ~/.claude/skills/grill-me
+ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.claude/skills/improve-codebase-architecture
 ln -s ~/dotfiles/codex/skills/baseline-ui ~/.codex/skills/baseline-ui
 ln -s ~/dotfiles/codex/skills/grill-me ~/.codex/skills/grill-me
 ln -s ~/dotfiles/codex/skills/improve-codebase-architecture ~/.codex/skills/improve-codebase-architecture
@@ -173,6 +177,8 @@ ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-interface-guidelines
 ln -s ~/dotfiles/skills/tdd ~/dotfiles/amp/skills/tdd
 ln -s ~/dotfiles/skills/tmux ~/dotfiles/amp/skills/tmux
+ln -s ~/dotfiles/skills/grill-me ~/dotfiles/amp/skills/grill-me
+ln -s ~/dotfiles/skills/improve-codebase-architecture ~/dotfiles/amp/skills/improve-codebase-architecture
 
 # Obsidian skills (source of truth: ~/notes/.amp/skills/)
 ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-markdown
@@ -231,7 +237,7 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
   - `pi-cloak/` + `cloak.json` — redacts configured secrets from `read` tool output
   - `music/` — music player
 - Prompt templates: `commit`, `explain`, `fix`, `review`, `test`
-- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, tdd, tmux)
+- Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, tdd, tmux, grill-me, improve-codebase-architecture)
 
 ### Claude Code (`claude/`)
 
@@ -291,9 +297,11 @@ These three complement each other:
 | Skill | Source | What it does | When to use |
 |-------|--------|-------------|-------------|
 | **modern-python** | — | Modern Python tooling guide (uv, ruff, ty) | Creating Python projects, writing scripts, migrating from pip/poetry/mypy/black |
-| **tdd** | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/tdd) | Red-green-refactor workflow for building features or fixing bugs one vertical slice at a time | When you want test-first implementation with behavior-focused tests |
+| **tdd** | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd) | Red-green-refactor workflow for building features or fixing bugs one vertical slice at a time | When you want test-first implementation with behavior-focused tests |
 | **tmux** | [mitsuhiko/agent-stuff](https://github.com/mitsuhiko/agent-stuff) | Private-socket tmux workflow for driving interactive CLIs and long-running processes | When a dev server, REPL, debugger, or TTY program needs controlled interactive monitoring |
 | **obsidian-markdown** | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | Obsidian Flavored Markdown reference (wikilinks, embeds, callouts, properties) | Working with .md files in Obsidian vaults |
+| **grill-me** | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) | Relentless interview loop for stress-testing plans and uncovering hidden requirements | Before committing to a plan or architecture |
+| **improve-codebase-architecture** | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture) | Finds deepening opportunities and now writes visual HTML architecture reports to the OS temp directory | When a codebase feels shallow, coupled, or hard to test |
 
 **Quick usage:**
 ```bash
@@ -301,6 +309,8 @@ These three complement each other:
 /skill:tdd
 /skill:baseline-ui
 /skill:tmux
+/skill:grill-me
+/skill:improve-codebase-architecture
 
 # In Claude Code
 /skill rams src/Button.tsx
@@ -308,6 +318,8 @@ These three complement each other:
 /skill modern-python
 /skill tdd
 /skill tmux
+/skill grill-me
+/skill improve-codebase-architecture
 
 # In Amp
 @rams src/Button.tsx
@@ -315,6 +327,8 @@ These three complement each other:
 @modern-python
 @tdd
 @tmux
+@grill-me
+@improve-codebase-architecture
 ```
 
 ### Starship (`starship.toml`)
