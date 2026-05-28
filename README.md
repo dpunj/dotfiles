@@ -39,6 +39,7 @@ dotfiles/
 │   │   ├── git-guard.ts          # Git completion notifications + dirty-repo warning
 │   │   ├── git-interceptor.ts    # Git editor-hang prevention + --no-verify blocking
 │   │   ├── safe-guard.ts         # File safety guardrails
+│   │   ├── searxng-search.ts     # Local/private SearXNG web_search tool
 │   │   ├── pi-cloak/             # Redacts configured secrets from read tool output
 │   │   └── music/                # Music player extension
 │   ├── prompts/          → ~/.pi/agent/prompts/
@@ -56,6 +57,9 @@ dotfiles/
 ├── kimi/             → ~/.kimi/
 │   ├── config.toml       # Kimi Code settings
 │   └── mcp.json          # MCP servers (context7)
+├── searxng/          → ~/.config/searxng/
+│   ├── compose.yaml      # Local SearXNG container for Pi web_search
+│   └── core-config/      # SearXNG settings; JSON output enabled
 ├── codex/
 │   └── skills/           # Shared dotfiles skill symlinks → ~/.codex/skills/
 │
@@ -126,6 +130,12 @@ ln -s ~/dotfiles/pi/cloak.json ~/.pi/agent/cloak.json
 ln -s ~/dotfiles/pi/extensions ~/.pi/agent/extensions
 ln -s ~/dotfiles/pi/prompts ~/.pi/agent/prompts
 ln -s ~/dotfiles/pi/themes ~/.pi/agent/themes
+
+# Local SearXNG for Pi web_search (OrbStack/Docker Compose)
+ln -s ~/dotfiles/searxng ~/.config/searxng
+cd ~/.config/searxng
+./init.sh
+docker compose up -d
 
 # Claude Code reads ~/.claude/CLAUDE.md (symlink to same file)
 ln -s ~/dotfiles/AGENTS.md ~/.claude/CLAUDE.md
@@ -238,6 +248,7 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
   - `auto-session-name.ts` — names sessions from first message
   - `git-guard.ts` / `git-interceptor.ts` / `safe-guard.ts` — safety guardrails for git, shell, and file ops
   - `pi-cloak/` + `cloak.json` — redacts configured secrets from `read` tool output
+  - `searxng-search.ts` — `web_search` tool backed by local/private SearXNG
   - `music/` — music player
 - Prompt templates: `commit`, `explain`, `fix`, `review`, `test`
 - Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, modern-python, tdd, tmux, grill-me, improve-codebase-architecture)
@@ -268,6 +279,14 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
 - Model: `kimi-for-coding` (Kimi K2.5, 262k context, via OAuth)
 - Thinking mode enabled by default
 - MCP servers (`mcp.json` → `~/.kimi/mcp.json`): context7
+
+### Local SearXNG (`searxng/`)
+
+- OrbStack/Docker Compose service bound to `127.0.0.1:8080`
+- `core-config/settings.yml`: enables `json` output for the SearXNG search API
+- `init.sh`: creates ignored `.env` with a generated `SEARXNG_SECRET`
+- Pi extension: `pi/extensions/searxng-search.ts` registers `web_search`
+- Details: [`searxng/README.md`](./searxng/README.md)
 
 ### Hermes Agent (`hermes/`)
 
@@ -344,6 +363,7 @@ Install these via Homebrew:
 
 ```fish
 brew install fish fzf zoxide starship
+brew install --cask orbstack
 ```
 
 ## Docs
