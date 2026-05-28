@@ -1,0 +1,17 @@
+use_default_settings:
+  engines:
+    remove:
+      # Tor/dark-web engines need extra network setup; keep local search quiet.
+      - ahmia
+      - torch
+      # Optional radio directory engine can emit cache init tracebacks on startup.
+      - radio browser
+
+server:
+  limiter: false
+  public_instance: false
+
+search:
+  formats:
+    - html
+    - json
