@@ -89,8 +89,15 @@ Pi auto-loads `~/dotfiles/pi/extensions/searxng-search.ts` through the symlinked
 /reload
 ```
 
-The tool is named `web_search`. It caps results and output size so raw SearXNG JSON
-does not flood the model context.
+The search tool is named `web_search`. It caps results and output size so raw
+SearXNG JSON does not flood the model context. It accepts SearXNG filters such as
+`categories`, `engines`, `language`, `page`, and `timeRange`; `maxResults` is an
+alias for `limit` for compatibility with other web-search tools.
+
+The companion fetch tool is named `web_fetch`. Use it after `web_search` finds a
+promising URL, or when the user provides a URL directly. It fetches public
+`http://` and `https://` URLs as markdown, text, raw HTML/source, or inline
+raster images. Private/local hosts are blocked by default.
 
 ## Files
 

@@ -16,6 +16,8 @@ import { Type, type Static } from "typebox";
 const DEFAULT_BASE_URL = "http://127.0.0.1:8080";
 const DEFAULT_LIMIT = 6;
 const MAX_LIMIT = 10;
+const DEFAULT_TIMEOUT_SECONDS = 25;
+const MAX_TIMEOUT_SECONDS = 120;
 const MAX_OUTPUT_BYTES = 24 * 1024;
 const MAX_OUTPUT_LINES = 200;
 const MAX_SNIPPET_LENGTH = 700;
@@ -29,12 +31,25 @@ const SearchParams = Type.Object({
 			maximum: 10,
 		}),
 	),
+	maxResults: Type.Optional(
+		Type.Number({
+			description: "Alias for limit, for compatibility with other web search tools",
+			minimum: 1,
+			maximum: 10,
+		}),
+	),
 	categories: Type.Optional(Type.String({ description: "Comma-separated SearXNG categories" })),
 	engines: Type.Optional(Type.String({ description: "Comma-separated SearXNG engines" })),
 	language: Type.Optional(Type.String({ description: "SearXNG language code, e.g. en-US" })),
 	page: Type.Optional(Type.Number({ description: "Search result page number", minimum: 1 })),
 	timeRange: Type.Optional(
 		Type.String({ description: "Optional SearXNG time range: day, month, or year" }),
+	),
+	timeout: Type.Optional(
+		Type.Number({
+			description: "Request timeout in seconds (default: 25, max: 120)",
+			minimum: 1,
+		}),
 	),
 });
 
@@ -71,6 +86,7 @@ interface SearchDetails {
 	resultCount: number;
 	results: ResultSummary[];
 	truncation?: TruncationResult;
+	fullOutputPath?: string;
 }
 
 function getBaseUrl(): URL {
@@ -82,9 +98,22 @@ function getBaseUrl(): URL {
 	}
 }
 
-function clampLimit(limit: number | undefined): number {
+function clampLimit(params: SearchParams): number {
+	const limit = params.limit ?? params.maxResults;
 	if (limit === undefined || !Number.isFinite(limit)) return DEFAULT_LIMIT;
 	return Math.min(Math.max(Math.trunc(limit), 1), MAX_LIMIT);
+}
+
+function clampTimeoutSeconds(timeout: number | undefined): number {
+	if (timeout === undefined || !Number.isFinite(timeout)) return DEFAULT_TIMEOUT_SECONDS;
+	return Math.min(Math.max(Math.trunc(timeout), 1), MAX_TIMEOUT_SECONDS);
+}
+
+function createOperationSignal(timeoutSeconds: number, outerSignal?: AbortSignal) {
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), timeoutSeconds * 1000);
+	const signal = outerSignal ? AbortSignal.any([outerSignal, controller.signal]) : controller.signal;
+	return { signal, cleanup: () => clearTimeout(timeoutId) };
 }
 
 function validateTimeRange(timeRange: string | undefined): string | undefined {
@@ -164,18 +193,34 @@ function summarizeResult(result: SearxngResult): ResultSummary {
 	return summary;
 }
 
-function applyOutputLimit(output: string): { text: string; truncation?: TruncationResult } {
+async function applyOutputLimit(output: string): Promise<{
+	text: string;
+	truncation?: TruncationResult;
+	fullOutputPath?: string;
+}> {
 	const truncation = truncateHead(output, {
 		maxBytes: MAX_OUTPUT_BYTES,
 		maxLines: MAX_OUTPUT_LINES,
 	});
 	if (!truncation.truncated) return { text: output };
 
+	const fullOutputPath = await writeTempOutput(output);
 	const notice = [
 		`[Search output truncated: showing ${truncation.outputLines} of ${truncation.totalLines} lines`,
-		`(${formatSize(truncation.outputBytes)} of ${formatSize(truncation.totalBytes)}).]`,
+		`(${formatSize(truncation.outputBytes)} of ${formatSize(truncation.totalBytes)}).`,
+		`Full output saved to: ${fullOutputPath}]`,
 	].join(" ");
-	return { text: `${truncation.content}\n\n${notice}`, truncation };
+	return { text: `${truncation.content}\n\n${notice}`, truncation, fullOutputPath };
+}
+
+async function writeTempOutput(output: string): Promise<string> {
+	const { mkdtemp, writeFile } = await import("node:fs/promises");
+	const { tmpdir } = await import("node:os");
+	const { join } = await import("node:path");
+	const dir = await mkdtemp(join(tmpdir(), "pi-web-search-"));
+	const outputPath = join(dir, "output.txt");
+	await writeFile(outputPath, output, "utf8");
+	return outputPath;
 }
 
 async function parseResponse(response: Response): Promise<SearxngResponse> {
@@ -212,12 +257,25 @@ export default function (pi: ExtensionAPI) {
 		async execute(_toolCallId, params, signal) {
 			const baseUrl = getBaseUrl();
 			const searchUrl = buildSearchUrl(params, baseUrl);
-			const response = await fetch(searchUrl, {
-				headers: buildLocalHeaders(baseUrl),
-				signal,
-			});
-			const payload = await parseResponse(response);
-			const limit = clampLimit(params.limit);
+			const timeoutSeconds = clampTimeoutSeconds(params.timeout);
+			const operation = createOperationSignal(timeoutSeconds, signal);
+			let payload: SearxngResponse;
+			try {
+				const response = await fetch(searchUrl, {
+					headers: buildLocalHeaders(baseUrl),
+					signal: operation.signal,
+				});
+				payload = await parseResponse(response);
+			} catch (error) {
+				if (signal?.aborted) throw new Error("SearXNG search cancelled");
+				if (operation.signal.aborted) {
+					throw new Error(`SearXNG search timed out after ${timeoutSeconds}s`);
+				}
+				throw error;
+			} finally {
+				operation.cleanup();
+			}
+			const limit = clampLimit(params);
 			const results = getResults(payload).slice(0, limit);
 
 			if (results.length === 0) {
@@ -228,7 +286,7 @@ export default function (pi: ExtensionAPI) {
 			}
 
 			const output = results.map(formatResult).join("\n\n");
-			const limited = applyOutputLimit(output);
+			const limited = await applyOutputLimit(output);
 			const details: SearchDetails = {
 				query: params.query,
 				baseUrl: baseUrl.origin,
@@ -236,6 +294,7 @@ export default function (pi: ExtensionAPI) {
 				results: results.map(summarizeResult),
 			};
 			if (limited.truncation) details.truncation = limited.truncation;
+			if (limited.fullOutputPath) details.fullOutputPath = limited.fullOutputPath;
 
 			return {
 				content: [{ type: "text", text: limited.text }],

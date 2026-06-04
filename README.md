@@ -40,6 +40,7 @@ dotfiles/
 │   │   ├── git-interceptor.ts    # Git editor-hang prevention + --no-verify blocking
 │   │   ├── safe-guard.ts         # File safety guardrails
 │   │   ├── searxng-search.ts     # Local/private SearXNG web_search tool
+│   │   ├── web-fetch.ts          # Public URL web_fetch tool with markdown/text/html output
 │   │   ├── pi-cloak/             # Redacts configured secrets from read tool output
 │   │   └── music/                # Music player extension
 │   ├── prompts/          → ~/.pi/agent/prompts/
@@ -249,6 +250,7 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
   - `git-guard.ts` / `git-interceptor.ts` / `safe-guard.ts` — safety guardrails for git, shell, and file ops
   - `pi-cloak/` + `cloak.json` — redacts configured secrets from `read` tool output
   - `searxng-search.ts` — `web_search` tool backed by local/private SearXNG
+  - `web-fetch.ts` — `web_fetch` tool for public URLs as markdown/text/html or images
   - `music/` — music player
 - Prompt templates: `commit`, `explain`, `fix`, `review`, `test`
 - Skills: shared from `~/dotfiles/skills/` (rams, baseline-ui, web-interface-guidelines, modern-python, tdd, tmux, grill-me, improve-codebase-architecture)
@@ -286,6 +288,7 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
 - `core-config/settings.yml`: enables `json` output for the SearXNG search API
 - `init.sh`: creates ignored `.env` with a generated `SEARXNG_SECRET`
 - Pi extension: `pi/extensions/searxng-search.ts` registers `web_search`
+- Companion fetch extension: `pi/extensions/web-fetch.ts` registers `web_fetch`
 - Details: [`searxng/README.md`](./searxng/README.md)
 
 ### Hermes Agent (`hermes/`)
