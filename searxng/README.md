@@ -3,7 +3,7 @@
 Private localhost SearXNG instance for Pi's `web_search` extension.
 
 ```text
-Pi web_search tool → http://127.0.0.1:8080/search?format=json → SearXNG container
+Pi web_search tool → 127.0.0.1:8080 or searxng.orb.local → SearXNG container
 ```
 
 This setup assumes macOS + OrbStack. OrbStack provides the Docker-compatible daemon;
@@ -24,7 +24,9 @@ docker compose up -d
 ```
 
 `./init.sh` creates `.env` with a generated `SEARXNG_SECRET`. The file is ignored by
-Git and should stay local to the machine.
+Git and should stay local to the machine. It also sets `GRANIAN_HOST=0.0.0.0` so
+SearXNG listens on IPv4 inside the container; OrbStack's localhost port forward can
+reset connections when Granian only listens on IPv6 (`::`).
 
 ## Daily use
 
@@ -42,14 +44,16 @@ docker compose down       # stop when you do not want local search running
 Open the browser UI:
 
 ```bash
-open http://127.0.0.1:8080
+open http://searxng.orb.local
 ```
+
+`http://127.0.0.1:8080` should also work in most OrbStack setups. If it resets
+the connection, use the `.orb.local` URL; Pi's `web_search` tries both by default.
 
 ## Verify
 
 ```bash
-curl -s -H 'X-Forwarded-For: 127.0.0.1' \
-  'http://127.0.0.1:8080/search?q=searxng&format=json' \
+curl -s 'http://searxng.orb.local/search?q=searxng&format=json' \
   | jq '.results[0:3] | map({title, url, engines})'
 ```
 
@@ -60,11 +64,12 @@ In Pi, reload extensions and ask for a web lookup:
 search the web for the current SearXNG Docker docs
 ```
 
-The Pi extension defaults to `http://127.0.0.1:8080`. If you change the port, start
-Pi with:
+The Pi extension defaults to trying `http://127.0.0.1:8080` first, then
+`http://searxng.orb.local` for OrbStack localhost-forwarding issues. To force a
+specific endpoint, start Pi with:
 
 ```bash
-SEARXNG_URL=http://127.0.0.1:8888 pi
+SEARXNG_URL=http://searxng.orb.local pi
 ```
 
 ## Management
@@ -110,10 +115,15 @@ raster images. Private/local hosts are blocked by default.
 ## Notes
 
 - Keep `SEARXNG_HOST=127.0.0.1` unless you intentionally want LAN access.
+- Keep `GRANIAN_HOST=0.0.0.0` so the container listens on IPv4 while Docker still
+  binds the host port to localhost only.
 - JSON output must stay enabled in `search.formats`; Pi's tool depends on it.
 - The tracked settings remove `ahmia`, `torch`, and `radio browser` to avoid local startup noise.
 - `limiter.toml` keeps direct localhost requests from being treated like proxied traffic.
-- For raw `curl` tests, send `X-Forwarded-For: 127.0.0.1` to avoid bot-detection log noise.
+- If `curl http://127.0.0.1:8080/` reports `Recv failure: Connection reset by peer`,
+  use `http://searxng.orb.local`; the Pi extension falls back to it automatically.
+- If `.orb.local` fails too, confirm `.env` contains `GRANIAN_HOST=0.0.0.0`, then
+  run `docker compose up -d --force-recreate`.
 - Bind-mounted config may still log an ownership warning on macOS/OrbStack.
   It is harmless for this localhost setup.
 - This is intentionally not MCP. Pi calls SearXNG directly through a small local tool.

@@ -284,7 +284,8 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
 
 ### Local SearXNG (`searxng/`)
 
-- OrbStack/Docker Compose service bound to `127.0.0.1:8080`
+- OrbStack/Docker Compose service bound to `127.0.0.1:8080` with
+  `searxng.orb.local` fallback
 - `core-config/settings.yml`: enables `json` output for the SearXNG search API
 - `init.sh`: creates ignored `.env` with a generated `SEARXNG_SECRET`
 - Pi extension: `pi/extensions/searxng-search.ts` registers `web_search`

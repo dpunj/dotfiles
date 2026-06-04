@@ -13,7 +13,7 @@ import {
 import { Text } from "@earendil-works/pi-tui";
 import { Type, type Static } from "typebox";
 
-const DEFAULT_BASE_URL = "http://127.0.0.1:8080";
+const DEFAULT_BASE_URLS = ["http://127.0.0.1:8080", "http://searxng.orb.local"];
 const DEFAULT_LIMIT = 6;
 const MAX_LIMIT = 10;
 const DEFAULT_TIMEOUT_SECONDS = 25;
@@ -89,12 +89,13 @@ interface SearchDetails {
 	fullOutputPath?: string;
 }
 
-function getBaseUrl(): URL {
-	const rawUrl = process.env.SEARXNG_URL ?? DEFAULT_BASE_URL;
+function getBaseUrls(): URL[] {
+	const rawUrls = process.env.SEARXNG_URL ? [process.env.SEARXNG_URL] : DEFAULT_BASE_URLS;
 	try {
-		return new URL(rawUrl);
-	} catch {
-		throw new Error(`Invalid SEARXNG_URL: ${rawUrl}`);
+		return rawUrls.map((rawUrl) => new URL(rawUrl));
+	} catch (error) {
+		const rawUrl = process.env.SEARXNG_URL ?? DEFAULT_BASE_URLS.join(", ");
+		throw new Error(`Invalid SEARXNG_URL or SearXNG default URL: ${rawUrl}`);
 	}
 }
 
@@ -240,6 +241,35 @@ async function parseResponse(response: Response): Promise<SearxngResponse> {
 	}
 }
 
+async function fetchSearxngResults(
+	params: SearchParams,
+	signal: AbortSignal | undefined,
+	timeoutSeconds: number,
+): Promise<{ payload: SearxngResponse; baseUrl: URL }> {
+	const operation = createOperationSignal(timeoutSeconds, signal);
+	let lastError: unknown;
+	try {
+		for (const baseUrl of getBaseUrls()) {
+			try {
+				const response = await fetch(buildSearchUrl(params, baseUrl), {
+					headers: buildLocalHeaders(baseUrl),
+					signal: operation.signal,
+				});
+				return { payload: await parseResponse(response), baseUrl };
+			} catch (error) {
+				if (signal?.aborted) throw new Error("SearXNG search cancelled");
+				if (operation.signal.aborted) {
+					throw new Error(`SearXNG search timed out after ${timeoutSeconds}s`);
+				}
+				lastError = error;
+			}
+		}
+	} finally {
+		operation.cleanup();
+	}
+	throw lastError instanceof Error ? lastError : new Error(String(lastError));
+}
+
 export default function (pi: ExtensionAPI) {
 	pi.registerTool({
 		name: "web_search",
@@ -255,26 +285,8 @@ export default function (pi: ExtensionAPI) {
 		parameters: SearchParams,
 
 		async execute(_toolCallId, params, signal) {
-			const baseUrl = getBaseUrl();
-			const searchUrl = buildSearchUrl(params, baseUrl);
 			const timeoutSeconds = clampTimeoutSeconds(params.timeout);
-			const operation = createOperationSignal(timeoutSeconds, signal);
-			let payload: SearxngResponse;
-			try {
-				const response = await fetch(searchUrl, {
-					headers: buildLocalHeaders(baseUrl),
-					signal: operation.signal,
-				});
-				payload = await parseResponse(response);
-			} catch (error) {
-				if (signal?.aborted) throw new Error("SearXNG search cancelled");
-				if (operation.signal.aborted) {
-					throw new Error(`SearXNG search timed out after ${timeoutSeconds}s`);
-				}
-				throw error;
-			} finally {
-				operation.cleanup();
-			}
+			const { payload, baseUrl } = await fetchSearxngResults(params, signal, timeoutSeconds);
 			const limit = clampLimit(params);
 			const results = getResults(payload).slice(0, limit);
 
