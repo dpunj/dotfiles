@@ -12,6 +12,7 @@ Reusable capabilities for AI coding agents. Each skill is a self-contained direc
 | [modern-python](./modern-python/) | Development | Modern Python tooling (uv, ruff, ty) |
 | [rams](./rams/) | Design | WCAG 2.1 accessibility + visual design review |
 | [tdd](./tdd/) | Development | Test-driven development with a red-green-refactor loop |
+| [teach](./teach/) | Productivity | Stateful teaching workspace for learning a new skill or concept |
 | [web-interface-guidelines](./web-interface-guidelines/) | Design | Comprehensive web UI compliance (80+ rules) |
 
 ## Installation
@@ -26,6 +27,7 @@ ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.pi/agent/skills/improve
 ln -s ~/dotfiles/skills/modern-python ~/.pi/agent/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.pi/agent/skills/tdd
+ln -s ~/dotfiles/skills/teach ~/.pi/agent/skills/teach
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interface-guidelines
 
 # Claude Code (~/.claude/skills/)
@@ -35,6 +37,7 @@ ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.claude/skills/improve-c
 ln -s ~/dotfiles/skills/modern-python ~/.claude/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
+ln -s ~/dotfiles/skills/teach ~/.claude/skills/teach
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
 
 # Codex (~/.codex/skills/)
@@ -45,6 +48,7 @@ ln -s ~/dotfiles/codex/skills/modern-python ~/.codex/skills/modern-python
 ln -s ~/dotfiles/codex/skills/rams ~/.codex/skills/rams
 ln -s ~/dotfiles/codex/skills/tdd ~/.codex/skills/tdd
 ln -s ~/dotfiles/codex/skills/tmux ~/.codex/skills/tmux
+ln -s ~/dotfiles/codex/skills/teach ~/.codex/skills/teach
 ln -s ~/dotfiles/codex/skills/web-interface-guidelines ~/.codex/skills/web-interface-guidelines
 
 # Amp (~/.config/amp/skills/)
@@ -54,6 +58,7 @@ ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.config/amp/skills/impro
 ln -s ~/dotfiles/skills/modern-python ~/.config/amp/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.config/amp/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.config/amp/skills/tdd
+ln -s ~/dotfiles/skills/teach ~/.config/amp/skills/teach
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.config/amp/skills/web-interface-guidelines
 ```
 
@@ -72,6 +77,7 @@ Examples:
 /skill:grill-me stress-test this merchant onboarding plan
 /skill:improve-codebase-architecture find deepening opportunities in src/tools
 /skill:baseline-ui
+/skill:teach TypeScript generics
 ```
 
 ### Claude Code
@@ -88,6 +94,7 @@ Examples:
 /skill rams src/Button.tsx      # Review specific file
 /skill modern-python            # Get Python tooling guidance
 /skill tdd                      # Use red-green-refactor for the task
+/skill teach Rust lifetimes      # Start a teaching workspace
 ```
 
 ### Amp
@@ -104,6 +111,7 @@ Examples:
 @rams src/Button.tsx
 @modern-python
 @tdd
+@teach database indexing
 ```
 
 ### Codex
@@ -194,6 +202,15 @@ Key ideas:
 - Ask for interface + behavior agreement before starting
 - Refactor only after returning to green
 
+### teach
+
+**Use when learning a new skill or concept over multiple sessions.** The agent treats the current directory as a teaching workspace with mission, resources, lessons, reference docs, and learning records.
+
+Good for:
+- Building a stateful curriculum around a specific goal
+- Producing short, cited HTML lessons
+- Tracking learning records and reference material over time
+
 ### web-interface-guidelines
 
 **Use for comprehensive UI compliance review.** The complete rulebook covering edge cases.
@@ -261,6 +278,7 @@ Skills can be used together for comprehensive workflows:
 | modern-python | Based on [trailofbits/cookiecutter-python](https://github.com/trailofbits/cookiecutter-python) | Apache-2.0 |
 | rams | [rams.ai](https://rams.ai) | MIT |
 | tdd | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd) | MIT |
+| teach | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/teach) | MIT |
 | web-interface-guidelines | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | MIT |
 
 ## Vendored Third-Party Skills
@@ -276,6 +294,7 @@ Current vendored skills:
 - `grill-me` → adapted from `mattpocock/skills/tree/main/skills/productivity/grill-me`
 - `improve-codebase-architecture` → synced from `mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture` with supporting domain-model references vendored locally; latest HTML-report update traced through Dillon Mulroy's dotfiles commit `55dbc9172e47f0c30d3c2cc1dd31dbf25bdac4c5`
 - `tdd` → synced from `mattpocock/skills/tree/main/skills/engineering/tdd`
+- `teach` → synced from `mattpocock/skills/tree/main/skills/productivity/teach`
 
 Vault-owned skills are intentionally not vendored here:
 - `defuddle`
