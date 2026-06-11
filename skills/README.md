@@ -9,6 +9,7 @@ Reusable capabilities for AI coding agents. Each skill is a self-contained direc
 | [baseline-ui](./baseline-ui/) | Design | Anti-AI-slop UI constraints for Tailwind/React |
 | [grill-me](./grill-me/) | Planning | Relentless interview loop for stress-testing plans and uncovering hidden requirements |
 | [improve-codebase-architecture](./improve-codebase-architecture/) | Architecture | Find deepening opportunities, refactoring seams, and testability improvements |
+| [last30days](./last30days/) | Research | Search recent social/web sources and synthesize what people are saying now |
 | [modern-python](./modern-python/) | Development | Modern Python tooling (uv, ruff, ty) |
 | [rams](./rams/) | Design | WCAG 2.1 accessibility + visual design review |
 | [tdd](./tdd/) | Development | Test-driven development with a red-green-refactor loop |
@@ -24,6 +25,7 @@ Skills are automatically available when symlinked into each agent's skills direc
 ln -s ~/dotfiles/skills/baseline-ui ~/.pi/agent/skills/baseline-ui
 ln -s ~/dotfiles/skills/grill-me ~/.pi/agent/skills/grill-me
 ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.pi/agent/skills/improve-codebase-architecture
+ln -s ~/dotfiles/skills/last30days ~/.pi/agent/skills/last30days
 ln -s ~/dotfiles/skills/modern-python ~/.pi/agent/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.pi/agent/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.pi/agent/skills/tdd
@@ -34,6 +36,7 @@ ln -s ~/dotfiles/skills/web-interface-guidelines ~/.pi/agent/skills/web-interfac
 ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
 ln -s ~/dotfiles/skills/grill-me ~/.claude/skills/grill-me
 ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.claude/skills/improve-codebase-architecture
+ln -s ~/dotfiles/skills/last30days ~/.claude/skills/last30days
 ln -s ~/dotfiles/skills/modern-python ~/.claude/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.claude/skills/tdd
@@ -44,6 +47,7 @@ ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-
 ln -s ~/dotfiles/codex/skills/baseline-ui ~/.codex/skills/baseline-ui
 ln -s ~/dotfiles/codex/skills/grill-me ~/.codex/skills/grill-me
 ln -s ~/dotfiles/codex/skills/improve-codebase-architecture ~/.codex/skills/improve-codebase-architecture
+ln -s ~/dotfiles/codex/skills/last30days ~/.codex/skills/last30days
 ln -s ~/dotfiles/codex/skills/modern-python ~/.codex/skills/modern-python
 ln -s ~/dotfiles/codex/skills/rams ~/.codex/skills/rams
 ln -s ~/dotfiles/codex/skills/tdd ~/.codex/skills/tdd
@@ -55,6 +59,7 @@ ln -s ~/dotfiles/codex/skills/web-interface-guidelines ~/.codex/skills/web-inter
 ln -s ~/dotfiles/skills/baseline-ui ~/.config/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/grill-me ~/.config/amp/skills/grill-me
 ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.config/amp/skills/improve-codebase-architecture
+ln -s ~/dotfiles/skills/last30days ~/.config/amp/skills/last30days
 ln -s ~/dotfiles/skills/modern-python ~/.config/amp/skills/modern-python
 ln -s ~/dotfiles/skills/rams ~/.config/amp/skills/rams
 ln -s ~/dotfiles/skills/tdd ~/.config/amp/skills/tdd
@@ -76,6 +81,7 @@ Examples:
 /skill:tdd implement order cancellation flow
 /skill:grill-me stress-test this merchant onboarding plan
 /skill:improve-codebase-architecture find deepening opportunities in src/tools
+/skill:last30days OpenClaw vs Hermes
 /skill:baseline-ui
 /skill:teach TypeScript generics
 ```
@@ -91,6 +97,7 @@ Examples:
 /skill baseline-ui              # Apply constraints to current conversation
 /skill grill-me                 # Stress-test a plan through structured questions
 /skill improve-codebase-architecture  # Find architecture deepening opportunities
+/skill last30days AI video tools  # Recent social/web research brief
 /skill rams src/Button.tsx      # Review specific file
 /skill modern-python            # Get Python tooling guidance
 /skill tdd                      # Use red-green-refactor for the task
@@ -108,6 +115,7 @@ Examples:
 @baseline-ui
 @grill-me stress-test this architecture
 @improve-codebase-architecture src/
+@last30days AI video tools
 @rams src/Button.tsx
 @modern-python
 @tdd
@@ -168,6 +176,15 @@ Good for:
 - Improving locality and leverage
 - Making code easier to test through real seams
 - Avoiding architecture drift by respecting existing ADRs
+
+### last30days
+
+**Use when you need current signal from the last month.** Searches Reddit, Hacker News, Polymarket, GitHub, and other configured sources, then produces a cited research brief.
+
+Optional unlocks:
+- `yt-dlp` for YouTube
+- browser cookies or X credentials for X/Twitter
+- API keys for ScrapeCreators, OpenRouter, Brave, Bluesky, and related sources
 
 ### modern-python
 
@@ -275,6 +292,7 @@ Skills can be used together for comprehensive workflows:
 | baseline-ui | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | MIT |
 | grill-me | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) | MIT |
 | improve-codebase-architecture | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture) | MIT |
+| last30days | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | MIT |
 | modern-python | Based on [trailofbits/cookiecutter-python](https://github.com/trailofbits/cookiecutter-python) | Apache-2.0 |
 | rams | [rams.ai](https://rams.ai) | MIT |
 | tdd | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd) | MIT |
@@ -293,6 +311,7 @@ Why:
 Current vendored skills:
 - `grill-me` → adapted from `mattpocock/skills/tree/main/skills/productivity/grill-me`
 - `improve-codebase-architecture` → synced from `mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture` with supporting domain-model references vendored locally; latest HTML-report update traced through Dillon Mulroy's dotfiles commit `55dbc9172e47f0c30d3c2cc1dd31dbf25bdac4c5`
+- `last30days` → synced from `mvanhorn/last30days-skill` at commit `122158415ae4`; includes the upstream MIT license in the skill directory
 - `tdd` → synced from `mattpocock/skills/tree/main/skills/engineering/tdd`
 - `teach` → synced from `mattpocock/skills/tree/main/skills/productivity/teach`
 
