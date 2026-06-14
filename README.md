@@ -58,6 +58,8 @@ dotfiles/
 ├── kimi/             → ~/.kimi/
 │   ├── config.toml       # Kimi Code settings
 │   └── mcp.json          # MCP servers (context7)
+├── llama-cpp/        # Docs/snippets for local llama.cpp model serving
+│   └── README.md         # Gemma 4 local Pi setup notes
 ├── searxng/          → ~/.config/searxng/
 │   ├── compose.yaml      # Local SearXNG container for Pi web_search
 │   └── core-config/      # SearXNG settings; JSON output enabled
@@ -285,6 +287,13 @@ ln -s ../../.amp/skills/json-canvas ~/notes/.agents/skills/json-canvas
 - Model: `kimi-for-coding` (Kimi K2.5, 262k context, via OAuth)
 - Thinking mode enabled by default
 - MCP servers (`mcp.json` → `~/.kimi/mcp.json`): context7
+
+### Local llama.cpp (`llama-cpp/`)
+
+- Docs for running a local llama.cpp OpenAI-compatible server for Pi
+- Keeps heavyweight repos/models under `~/Developer/local-ai/`, not in dotfiles or iCloud
+- Uses port `8081` by default to avoid colliding with local SearXNG on `8080`
+- Details: [`llama-cpp/README.md`](./llama-cpp/README.md)
 
 ### Local SearXNG (`searxng/`)
 
