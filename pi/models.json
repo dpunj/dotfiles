@@ -1,5 +1,27 @@
 {
   "providers": {
+    "gemma4-local": {
+      "name": "Gemma 4 local llama.cpp",
+      "api": "openai-completions",
+      "baseUrl": "http://127.0.0.1:8081/v1",
+      "apiKey": "llama.cpp",
+      "authHeader": false,
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false
+      },
+      "models": [
+        {
+          "id": "gemma-4-26B-A4B-it-UD-Q4_K_XL.gguf",
+          "name": "Gemma 4 26B A4B Q4 XL local",
+          "reasoning": false,
+          "input": ["text", "image"],
+          "contextWindow": 32768,
+          "maxTokens": 8192,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        }
+      ]
+    },
     "openai-codex": {
       "models": [
         {
