@@ -177,7 +177,7 @@ safe_link ~/dotfiles/hermes/SOUL.md ~/.hermes/SOUL.md
 mkdir -p ~/.claude/skills
 mkdir -p ~/.pi/agent/skills
 mkdir -p ~/.codex/skills
-for skill in rams baseline-ui web-interface-guidelines modern-python tdd tmux grill-me improve-codebase-architecture last30days
+for skill in rams baseline-ui web-interface-guidelines modern-python tdd tmux grill-me improve-codebase-architecture last30days shaping breadboarding
     safe_link ~/dotfiles/skills/$skill ~/.claude/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/dotfiles/amp/skills/$skill
     safe_link ~/dotfiles/skills/$skill ~/.pi/agent/skills/$skill
