@@ -7,11 +7,13 @@ Reusable capabilities for AI coding agents. Each skill is a self-contained direc
 | Skill | Category | Purpose |
 |-------|----------|---------|
 | [baseline-ui](./baseline-ui/) | Design | Anti-AI-slop UI constraints for Tailwind/React |
+| [breadboarding](./breadboarding/) | Planning | Turn a workflow description into affordance tables mapping UI and code wiring |
 | [grill-me](./grill-me/) | Planning | Relentless interview loop for stress-testing plans and uncovering hidden requirements |
 | [improve-codebase-architecture](./improve-codebase-architecture/) | Architecture | Find deepening opportunities, refactoring seams, and testability improvements |
 | [last30days](./last30days/) | Research | Search recent social/web sources and synthesize what people are saying now |
 | [modern-python](./modern-python/) | Development | Modern Python tooling (uv, ruff, ty) |
 | [rams](./rams/) | Design | WCAG 2.1 accessibility + visual design review |
+| [shaping](./shaping/) | Planning | Shape Up methodology — iterate on requirements and solution shapes with fit checks before building |
 | [tdd](./tdd/) | Development | Test-driven development with a red-green-refactor loop |
 | [teach](./teach/) | Productivity | Stateful teaching workspace for learning a new skill or concept |
 | [web-interface-guidelines](./web-interface-guidelines/) | Design | Comprehensive web UI compliance (80+ rules) |
@@ -290,11 +292,13 @@ Skills can be used together for comprehensive workflows:
 | Skill | Upstream | License |
 |-------|----------|---------|
 | baseline-ui | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | MIT |
+| breadboarding | [rjs/shaping-skills](https://github.com/rjs/shaping-skills) | No explicit license (see upstream) |
 | grill-me | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) | MIT |
 | improve-codebase-architecture | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture) | MIT |
 | last30days | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | MIT |
 | modern-python | Based on [trailofbits/cookiecutter-python](https://github.com/trailofbits/cookiecutter-python) | Apache-2.0 |
 | rams | [rams.ai](https://rams.ai) | MIT |
+| shaping | [rjs/shaping-skills](https://github.com/rjs/shaping-skills) | No explicit license (see upstream) |
 | tdd | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd) | MIT |
 | teach | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/teach) | MIT |
 | web-interface-guidelines | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | MIT |
@@ -309,9 +313,11 @@ Why:
 - lets us version upstream skill updates in git
 
 Current vendored skills:
+- `breadboarding` → synced from `rjs/shaping-skills` at commit `d8b65d7`; upstream file `breadboarding/skill.md` vendored here as `SKILL.md` (case-normalized for skill loaders)
 - `grill-me` → adapted from `mattpocock/skills/tree/main/skills/productivity/grill-me`
 - `improve-codebase-architecture` → synced from `mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture` with supporting domain-model references vendored locally; latest HTML-report update traced through Dillon Mulroy's dotfiles commit `55dbc9172e47f0c30d3c2cc1dd31dbf25bdac4c5`
 - `last30days` → synced from `mvanhorn/last30days-skill` at commit `122158415ae4`; includes the upstream MIT license in the skill directory
+- `shaping` → synced from `rjs/shaping-skills` at commit `d8b65d7`
 - `tdd` → synced from `mattpocock/skills/tree/main/skills/engineering/tdd`
 - `teach` → synced from `mattpocock/skills/tree/main/skills/productivity/teach`
 

@@ -172,6 +172,8 @@ ln -s ~/dotfiles/skills/tmux ~/.pi/agent/skills/tmux
 ln -s ~/dotfiles/skills/grill-me ~/.pi/agent/skills/grill-me
 ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.pi/agent/skills/improve-codebase-architecture
 ln -s ~/dotfiles/skills/last30days ~/.pi/agent/skills/last30days
+ln -s ~/dotfiles/skills/shaping ~/.pi/agent/skills/shaping
+ln -s ~/dotfiles/skills/breadboarding ~/.pi/agent/skills/breadboarding
 ln -s ~/dotfiles/skills/rams ~/.claude/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/.claude/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/.claude/skills/web-interface-guidelines
@@ -181,6 +183,8 @@ ln -s ~/dotfiles/skills/tmux ~/.claude/skills/tmux
 ln -s ~/dotfiles/skills/grill-me ~/.claude/skills/grill-me
 ln -s ~/dotfiles/skills/improve-codebase-architecture ~/.claude/skills/improve-codebase-architecture
 ln -s ~/dotfiles/skills/last30days ~/.claude/skills/last30days
+ln -s ~/dotfiles/skills/shaping ~/.claude/skills/shaping
+ln -s ~/dotfiles/skills/breadboarding ~/.claude/skills/breadboarding
 ln -s ~/dotfiles/codex/skills/baseline-ui ~/.codex/skills/baseline-ui
 ln -s ~/dotfiles/codex/skills/grill-me ~/.codex/skills/grill-me
 ln -s ~/dotfiles/codex/skills/improve-codebase-architecture ~/.codex/skills/improve-codebase-architecture
@@ -190,6 +194,8 @@ ln -s ~/dotfiles/codex/skills/rams ~/.codex/skills/rams
 ln -s ~/dotfiles/codex/skills/tdd ~/.codex/skills/tdd
 ln -s ~/dotfiles/codex/skills/tmux ~/.codex/skills/tmux
 ln -s ~/dotfiles/codex/skills/web-interface-guidelines ~/.codex/skills/web-interface-guidelines
+ln -s ~/dotfiles/codex/skills/shaping ~/.codex/skills/shaping
+ln -s ~/dotfiles/codex/skills/breadboarding ~/.codex/skills/breadboarding
 ln -s ~/dotfiles/skills/rams ~/dotfiles/amp/skills/rams
 ln -s ~/dotfiles/skills/baseline-ui ~/dotfiles/amp/skills/baseline-ui
 ln -s ~/dotfiles/skills/web-interface-guidelines ~/dotfiles/amp/skills/web-interface-guidelines
@@ -199,6 +205,8 @@ ln -s ~/dotfiles/skills/tmux ~/dotfiles/amp/skills/tmux
 ln -s ~/dotfiles/skills/grill-me ~/dotfiles/amp/skills/grill-me
 ln -s ~/dotfiles/skills/improve-codebase-architecture ~/dotfiles/amp/skills/improve-codebase-architecture
 ln -s ~/dotfiles/skills/last30days ~/dotfiles/amp/skills/last30days
+ln -s ~/dotfiles/skills/shaping ~/dotfiles/amp/skills/shaping
+ln -s ~/dotfiles/skills/breadboarding ~/dotfiles/amp/skills/breadboarding
 
 # Obsidian skills (source of truth: ~/notes/.amp/skills/)
 ln -s ~/dotfiles/amp/skills/obsidian-markdown ~/.config/amp/skills/obsidian-markdown
