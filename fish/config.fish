@@ -10,6 +10,9 @@ end
 
 set -gx DYLD_FALLBACK_LIBRARY_PATH /opt/homebrew/lib $DYLD_FALLBACK_LIBRARY_PATH
 
+# versa-ts: opt in to copying .env.prod into fresh worktrees (scripts/setup-worktree.sh)
+set -gx VERSA_COPY_ENV_PROD 1
+
 if status is-interactive
     fzf --fish | source
     zoxide init fish | source
