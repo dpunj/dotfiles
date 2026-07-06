@@ -8,6 +8,7 @@ Reusable capabilities for AI coding agents. Each skill is a self-contained direc
 |-------|----------|---------|
 | [baseline-ui](./baseline-ui/) | Design | Anti-AI-slop UI constraints for Tailwind/React |
 | [breadboarding](./breadboarding/) | Planning | Turn a workflow description into affordance tables mapping UI and code wiring |
+| [explain-diff-html](./explain-diff-html/) | Learning | Turn a diff, branch, or PR into a self-contained interactive HTML explainer with a comprehension quiz |
 | [grill-me](./grill-me/) | Planning | Relentless interview loop for stress-testing plans and uncovering hidden requirements |
 | [improve-codebase-architecture](./improve-codebase-architecture/) | Architecture | Find deepening opportunities, refactoring seams, and testability improvements |
 | [last30days](./last30days/) | Research | Search recent social/web sources and synthesize what people are saying now |
@@ -158,6 +159,17 @@ Key constraints:
 - Animate only `transform`/`opacity`
 - `text-balance` for headings, `text-pretty` for body
 
+### explain-diff-html
+
+**Use when you need to explain a code change to someone (including future you).** Point it at a diff, branch, or PR and it produces a single self-contained HTML file — Background, Intuition, high-level Code walkthrough, and an interactive multiple-choice quiz to check comprehension.
+
+Good for:
+- Onboarding a teammate onto an unfamiliar PR or branch
+- Capturing the "why" behind a non-trivial change as a shareable artifact
+- Self-checking that you actually understand a change you're reviewing
+
+Output lands outside the repo with a `YYYY-MM-DD-` filename prefix, so explainers stay time-sorted and out of version control.
+
 ### grill-me
 
 **Use before building or committing to a plan.** The agent interviews you one decision at a time, explores the codebase when it can answer its own questions, and provides its recommended answer for each unresolved branch.
@@ -293,6 +305,7 @@ Skills can be used together for comprehensive workflows:
 |-------|----------|---------|
 | baseline-ui | [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | MIT |
 | breadboarding | [rjs/shaping-skills](https://github.com/rjs/shaping-skills) | No explicit license (see upstream) |
+| explain-diff-html | [geoffreylitt gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524) | No explicit license (see upstream gist) |
 | grill-me | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) | MIT |
 | improve-codebase-architecture | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture) | MIT |
 | last30days | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | MIT |
@@ -314,6 +327,7 @@ Why:
 
 Current vendored skills:
 - `breadboarding` → synced from `rjs/shaping-skills` at commit `d8b65d7`; upstream file `breadboarding/skill.md` vendored here as `SKILL.md` (case-normalized for skill loaders)
+- `explain-diff-html` → vendored from Geoffrey Litt's [gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524); single self-contained `SKILL.md`, kept verbatim
 - `grill-me` → adapted from `mattpocock/skills/tree/main/skills/productivity/grill-me`
 - `improve-codebase-architecture` → synced from `mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture` with supporting domain-model references vendored locally; latest HTML-report update traced through Dillon Mulroy's dotfiles commit `55dbc9172e47f0c30d3c2cc1dd31dbf25bdac4c5`
 - `last30days` → synced from `mvanhorn/last30days-skill` at commit `122158415ae4`; includes the upstream MIT license in the skill directory
