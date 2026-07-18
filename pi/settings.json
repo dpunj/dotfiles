@@ -12,10 +12,9 @@
   ],
   "defaultThinkingLevel": "max",
   "enabledModels": [
-    "openai-codex/gpt-5.4",
-    "openai-codex/gpt-5.5",
-    "anthropic/claude-opus-4-7",
-    "gemma4-local/gemma-4-26B-A4B-it-UD-Q4_K_XL.gguf"
+    "gemma4-local/gemma-4-26B-A4B-it-UD-Q4_K_XL.gguf",
+    "kimi-coding/k3",
+    "openai-codex/gpt-5.6-sol"
   ],
   "hideThinkingBlock": false
 }
